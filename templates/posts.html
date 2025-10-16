@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ section.title }} - {{ config.title }}</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #fff;
+        }
+        .posts-list {
+            list-style: none;
+            padding: 0;
+        }
+        .post-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        .post-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .post-title a {
+            text-decoration: none;
+            color: #333;
+        }
+        .post-title a:hover {
+            color: #000;
+        }
+        .post-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .back-link {
+            color: #666;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="back-link">← 返回首页</a>
+    <h1>{{ section.title }}</h1>
+    
+    {% if section.content %}
+    <div class="section-content">
+        {{ section.content | safe }}
+    </div>
+    {% endif %}
+    
+    <ul class="posts-list">
+        {% for page in section.pages %}
+        <li class="post-item">
+            <div class="post-title">
+                <a href="{{ page.permalink }}">{{ page.title }}</a>
+            </div>
+            <div class="post-date">
+                {{ page.date | date(format="%Y-%m-%d") }}
+            </div>
+            {% if page.description %}
+            <div class="post-description">
+                {{ page.description }}
+            </div>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,329 @@
++++
+title = "Nginx 网站配置与 CloudFlare SSL 证书设置指南"
+date = 2025-10-14
++++
+
+# Nginx 网站配置与 CloudFlare SSL 证书设置指南
+
+## 1. 服务器环境准备
+
+### 1.1 系统更新
+```bash
+sudo apt update
+sudo apt upgrade -y
+```
+
+### 1.2 安装必要软件
+```bash
+sudo apt install nginx -y
+sudo apt install curl ufw -y
+```
+
+## 2. 网站目录结构创建
+
+### 2.1 创建网站根目录
+```bash
+# 创建网站根目录
+sudo mkdir -p /var/www/***.online
+
+# 设置正确的所有权
+sudo chown -R www-data:www-data /var/www/***.online
+
+# 设置适当的权限
+sudo chmod -R 755 /var/www/***.online
+```
+
+### 2.2 创建 SSL 证书目录
+```bash
+# 创建 SSL 证书存储目录
+sudo mkdir -p /var/www/Cert_SSL
+
+# 设置证书目录权限
+sudo chmod 600 /var/www/Cert_SSL/
+```
+
+## 3. SSL 证书配置
+
+### 3.1 上传证书文件
+将以下文件上传到 `/var/www/Cert_SSL/` 目录：
+- `certificate.crt` - CloudFlare Origin 证书
+- `private.key` - 私钥文件
+
+### 3.2 验证证书文件
+```bash
+# 检查证书文件
+sudo ls -la /var/www/Cert_SSL/
+
+# 验证证书信息
+sudo openssl x509 -in /var/www/Cert_SSL/certificate.crt -text -noout
+```
+
+## 4. Nginx 配置文件创建
+
+### 4.1 创建站点配置文件
+```bash
+sudo nano /etc/nginx/sites-available/***.online
+```
+
+### 4.2 配置文件内容
+```nginx
+# HTTP 到 HTTPS 重定向配置
+server {
+    listen 80;
+    listen [::]:80;
+    
+    # 域名配置 - 替换为实际域名
+    server_name ***.online www.***.online;
+    
+    # 301 永久重定向到 HTTPS
+    return 301 https://$server_name$request_uri;
+    
+    # 日志文件
+    access_log /var/log/nginx/***.online.access.log;
+    error_log /var/log/nginx/***.online.error.log;
+}
+
+# HTTPS 主服务器配置
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    
+    # 域名配置
+    server_name ***.online www.***.online;
+    
+    # SSL 证书配置
+    ssl_certificate /var/www/Cert_SSL/certificate.crt;
+    ssl_certificate_key /var/www/Cert_SSL/private.key;
+    
+    # SSL 安全配置
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384;
+    ssl_prefer_server_ciphers off;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+    ssl_session_tickets off;
+    
+    # 网站根目录
+    root /var/www/***.online;
+    index index.html index.htm index.php;
+    
+    # 日志配置
+    access_log /var/log/nginx/***.online.access.log;
+    error_log /var/log/nginx/***.online.error.log;
+    
+    # 安全头部配置
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Referrer-Policy "no-referrer-when-downgrade" always;
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    
+    # 主位置块配置
+    location / {
+        try_files $uri $uri/ =404;
+        
+        # 启用 gzip 压缩
+        gzip_static on;
+    }
+    
+    # 静态资源缓存配置
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|webp|avif)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        add_header Vary "Accept-Encoding";
+        
+        # 启用 gzip 压缩
+        gzip_static on;
+    }
+    
+    # 字体文件缓存配置
+    location ~* \.(woff|woff2|ttf|eot)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        add_header Access-Control-Allow-Origin "*";
+    }
+    
+    # 禁止访问隐藏文件
+    location ~ /\. {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+    
+    # 禁止访问敏感文件
+    location ~ /(\.env|composer\.json|composer\.lock|package\.json|web\.config|\.git|\.htaccess)$ {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+    
+    # 安全扫描和机器人拦截
+    location ~* (wp-admin|wp-login|administrator|admin|login|xmlrpc) {
+        deny all;
+    }
+    
+    # 错误页面配置
+    error_page 404 /404.html;
+    error_page 500 502 503 504 /50x.html;
+    
+    location = /50x.html {
+        root /usr/share/nginx/html;
+    }
+}
+```
+
+## 5. 启用网站配置
+
+### 5.1 启用站点配置
+```bash
+# 创建符号链接启用站点
+sudo ln -s /etc/nginx/sites-available/***.online /etc/nginx/sites-enabled/
+
+# 禁用默认 Nginx 站点（如果存在）
+sudo rm -f /etc/nginx/sites-enabled/default
+```
+
+### 5.2 配置验证和重载
+```bash
+# 测试 Nginx 配置语法
+sudo nginx -t
+
+# 如果测试成功，重新加载 Nginx
+sudo systemctl reload nginx
+
+# 检查 Nginx 服务状态
+sudo systemctl status nginx
+
+# 启用 Nginx 开机自启
+sudo systemctl enable nginx
+```
+
+## 6. 防火墙配置
+
+### 6.1 配置 UFW 防火墙
+```bash
+# 启用 UFW
+sudo ufw enable
+
+# 添加必要规则
+sudo ufw allow ssh
+sudo ufw allow 'Nginx Full'
+sudo ufw allow 22129/tcp from ***.***.***.***  # 特定 IP 的特定端口
+
+# 检查防火墙状态
+sudo ufw status verbose
+```
+
+## 7. CloudFlare 配置
+
+### 7.1 SSL/TLS 设置
+1. 登录 CloudFlare 仪表板
+2. 选择你的域名
+3. 进入 **SSL/TLS** → **概述**
+4. 设置加密模式为 **"完全"**
+
+### 7.2 DNS 配置
+1. 进入 **DNS** → **记录**
+2. 确保 A 记录指向你的服务器 IP `***.***.***.***`
+3. 确保代理状态为"已代理"（橙色云图标）
+
+### 7.3 缓存配置
+1. 进入 **缓存** → **配置**
+2. 点击 **"清除所有缓存"**
+
+### 7.4 其他推荐设置
+- **速度** → **优化**：启用 Brotli 压缩
+- **缓存** → **配置**：设置缓存级别为标准
+- **网络**：启用 HTTP/3
+
+## 8. 最终验证测试
+
+### 8.1 服务器端测试
+```bash
+# 测试本地 HTTPS 连接
+curl -k -H "Host: ***.online" https://localhost
+
+# 测试 SSL 握手
+sudo openssl s_client -connect localhost:443 -servername ***.online
+
+# 检查 Nginx 错误日志
+sudo tail -f /var/log/nginx/error.log
+```
+
+### 8.2 在线工具验证
+- SSL 证书检查：SSL Labs SSL Test
+- 安全头检查：SecurityHeaders.com
+- 网站性能：PageSpeed Insights
+
+## 9. 故障排除
+
+### 9.1 常见问题解决
+
+#### 521 错误
+```bash
+# 检查 Nginx 状态
+sudo systemctl status nginx
+
+# 检查防火墙
+sudo ufw status
+
+# 检查端口监听
+sudo netstat -tulpn | grep nginx
+```
+
+#### SSL 证书错误
+```bash
+# 验证证书路径和权限
+sudo ls -la /var/www/Cert_SSL/
+
+# 测试证书有效性
+sudo openssl x509 -in /var/www/Cert_SSL/certificate.crt -text -noout
+```
+
+### 9.2 日志检查
+```bash
+# 实时查看访问日志
+sudo tail -f /var/log/nginx/***.online.access.log
+
+# 实时查看错误日志
+sudo tail -f /var/log/nginx/***.online.error.log
+
+# 查看系统日志中的 Nginx 相关条目
+sudo journalctl -u nginx -f
+```
+
+## 10. 维护和监控
+
+### 10.1 定期维护命令
+```bash
+# 重启 Nginx 服务
+sudo systemctl restart nginx
+
+# 重新加载配置（不中断服务）
+sudo systemctl reload nginx
+
+# 检查配置语法
+sudo nginx -t
+
+# 更新 SSL 证书（如果需要）
+# 重新上传证书文件后重新加载 Nginx
+```
+
+### 10.2 监控命令
+```bash
+# 检查 Nginx 进程状态
+ps aux | grep nginx
+
+# 检查服务器资源使用情况
+htop
+
+# 检查磁盘空间
+df -h
+
+# 检查内存使用
+free -h
+```
+
+---
+
+**注意**：请将配置文件中的 `***.online` 和 `***.***.***.***` 替换为你的实际域名和 IP 地址。

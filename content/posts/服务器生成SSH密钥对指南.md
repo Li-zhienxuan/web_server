@@ -1,0 +1,221 @@
++++
+title = "服务器生成SSH密钥对指南"
+date = 2025-10-14
++++
+
+# 服务器生成SSH密钥对指南
+
+## 🔐 生成SSH密钥对
+
+### 1. 登录服务器并生成密钥
+```bash
+# 登录到你的服务器
+ssh root@your_server_ip
+
+# 切换到要配置密钥的用户（如果是为特定用户生成）
+su - username
+
+# 生成ED25519密钥（推荐，更安全更快）
+ssh-keygen -t ed25519 -C "your_email@example.com" -f ~/.ssh/id_ed25519
+
+# 或者生成RSA密钥（兼容性更好）
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com" -f ~/.ssh/id_rsa
+```
+
+### 2. 密钥生成过程中的选项
+系统会提示你：
+- **输入密码短语**（推荐设置，增加安全性）
+- **确认密码短语**
+
+示例输出：
+```
+Generating public/private ed25519 key pair.
+Enter passphrase (empty for no passphrase): [输入密码]
+Enter same passphrase again: [再次输入密码]
+Your identification has been saved in /home/username/.ssh/id_ed25519
+Your public key has been saved in /home/username/.ssh/id_ed25519.pub
+```
+
+## 📁 设置正确的文件权限
+
+```bash
+# 确保.ssh目录存在且权限正确
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
+
+# 设置私钥权限（必须严格）
+chmod 600 ~/.ssh/id_ed25519
+
+# 设置公钥权限
+chmod 644 ~/.ssh/id_ed25519.pub
+
+# 设置authorized_keys文件权限（如果存在）
+chmod 600 ~/.ssh/authorized_keys
+```
+
+## 🔗 配置公钥认证
+
+### 1. 将公钥添加到authorized_keys
+```bash
+# 将公钥添加到授权文件
+cat ~/.ssh/id_ed25519.pub >> ~/.ssh/authorized_keys
+
+# 或者使用ssh-copy-id（如果要从其他机器复制）
+# ssh-copy-id -i ~/.ssh/id_ed25519.pub username@server_ip
+```
+
+### 2. 验证authorized_keys文件
+```bash
+# 检查文件内容
+cat ~/.ssh/authorized_keys
+
+# 确保文件权限正确
+chmod 600 ~/.ssh/authorized_keys
+```
+
+##⚙️ 配置SSH服务器
+
+### 1. 编辑SSH服务器配置
+```bash
+sudo nano /etc/ssh/sshd_config
+```
+
+### 2. 确保以下设置正确
+```bash
+# 启用公钥认证
+PubkeyAuthentication yes
+
+# 公钥文件路径
+AuthorizedKeysFile .ssh/authorized_keys
+
+# 可以选择禁用密码认证（更安全）
+PasswordAuthentication no
+
+# 允许的用户（可选）
+AllowUsers username
+
+# 禁用root登录（推荐）
+PermitRootLogin no
+```
+
+### 3. 重启SSH服务
+```bash
+# Ubuntu/Debian
+sudo systemctl restart ssh
+
+# CentOS/RHEL
+sudo systemctl restart sshd
+```
+
+## 📤 下载私钥到本地（可选）
+
+### 方法1：使用scp下载
+```bash
+# 从本地机器执行，下载私钥
+scp username@server_ip:~/.ssh/id_ed25519 ~/.ssh/server_key
+
+# 设置本地权限
+chmod 600 ~/.ssh/server_key
+```
+
+### 方法2：复制粘贴内容
+```bash
+# 在服务器上显示私钥内容
+cat ~/.ssh/id_ed25519
+
+# 然后手动复制内容到本地文件
+```
+
+## 🧪 测试SSH密钥登录
+
+### 1. 从本地机器测试连接
+```bash
+# 使用密钥登录
+ssh -i ~/.ssh/server_key username@server_ip
+
+# 如果使用默认密钥名称，可以省略 -i 参数
+ssh username@server_ip
+```
+
+### 2. 调试连接问题
+```bash
+# 显示详细连接信息
+ssh -vvv -i ~/.ssh/server_key username@server_ip
+```
+
+## 🔄 管理多个密钥
+
+### 创建SSH配置文件
+在本地机器创建 `~/.ssh/config`：
+
+```bash
+Host myserver
+    HostName your_server_ip
+    User username
+    IdentityFile ~/.ssh/server_key
+    Port 22
+
+Host github
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_github
+```
+
+## 🛡️ 安全最佳实践
+
+### 1. 使用强密码短语
+```bash
+# 更改密钥密码
+ssh-keygen -p -f ~/.ssh/id_ed25519
+```
+
+### 2. 备份密钥
+```bash
+# 备份整个.ssh目录
+tar -czf ssh_backup.tar.gz ~/.ssh
+
+# 安全存储备份文件
+```
+
+### 3. 撤销密钥
+如果需要撤销密钥，只需从服务器的 `~/.ssh/authorized_keys` 文件中删除对应的公钥。
+
+### 4. 监控SSH登录
+```bash
+# 查看SSH登录日志
+sudo tail -f /var/log/auth.log | grep ssh
+
+# 查看当前SSH连接
+who
+w
+```
+
+## ❌ 常见问题解决
+
+### 权限问题
+```bash
+# 修复SSH目录权限
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/id_ed25519
+```
+
+### 连接被拒绝
+```bash
+# 检查SSH服务状态
+sudo systemctl status ssh
+
+# 检查防火墙设置
+sudo ufw status
+```
+
+### 密钥不被接受
+```bash
+# 验证公钥格式
+ssh-keygen -l -f ~/.ssh/id_ed25519.pub
+
+# 检查authorized_keys文件格式
+cat ~/.ssh/authorized_keys
+```
+
+按照以上步骤，你就可以在服务器上成功生成SSH密钥对，并配置安全的密钥认证登录方式。记得测试连接并确保备份好你的私钥。
