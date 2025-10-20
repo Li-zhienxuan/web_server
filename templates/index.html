@@ -156,12 +156,13 @@
         
         /* 主要内容区域 */
         .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: calc(var(--header-height) + 40px) 5% 40px;
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: calc(var(--header-height) + 40px) 4% 40px;
             flex: 1;
             display: grid;
-            grid-template-columns: 1fr 300px;
+            grid-template-columns: minmax(0, 1fr) 360px;
             gap: 40px;
         }
         
@@ -246,86 +247,98 @@
             border-radius: 2px;
         }
         
-        /* 友链卡片 */
+        /* 友链卡片样式优化 */
         .friend-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            width: 100%;
         }
-        
+
         .friend-card {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: var(--shadow);
-            border-left: 4px solid var(--themecolor);
-            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
             display: flex;
             flex-direction: column;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            text-decoration: none; /* 移除下划线 */
+            overflow: hidden;
         }
-        
+
         .friend-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--themecolor);
         }
-        
+
         .friend-header {
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
+            gap: 15px;
         }
-        
+
         .friend-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
+            width: 54px;
+            height: 54px;
+            border-radius: 12px; /* 方形圆角头像 */
             object-fit: cover;
-            margin-right: 15px;
-            border: 2px solid var(--border-color);
+            transition: transform 0.3s ease;
         }
-        
+
         .friend-info {
             flex: 1;
+            min-width: 0;
         }
-        
+
         .friend-name {
+            font-size: 1.1rem;
             font-weight: 600;
-            font-size: 1.3rem;
-            margin-bottom: 5px;
             color: var(--text-color);
+            margin-bottom: 4px;
         }
-        
+
         .friend-link {
+            font-size: 0.85rem;
             color: var(--themecolor);
-            text-decoration: none;
-            font-size: 0.9rem;
+            opacity: 0.8;
         }
-        
-        .friend-link:hover {
-            text-decoration: underline;
-        }
-        
+
         .friend-desc {
-            color: #7f8c8d;
-            line-height: 1.5;
-            flex: 1;
+            margin-top: 12px;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.8;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
         }
-        
+
         .friend-tags {
+            margin-top: 12px;
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 15px;
+            gap: 6px;
         }
-        
+
         .friend-tag {
-            background-color: rgba(234, 134, 143, 0.1);
-            color: var(--themecolor);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+            padding: 3px 8px;
+            font-size: 0.75rem;
+            border-radius: 6px;
+            background: var(--bg-color);
+            color: var(--text-color);
+            opacity: 0.8;
         }
-        
+
+        /* 暗色模式适配 */
+        [data-theme="dark"] .friend-card:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
         /* 申请友链部分 */
         .apply-section {
             margin-top: 50px;
@@ -497,16 +510,20 @@
         }
         
         /* 响应式设计 */
+        @media (max-width: 1400px) {
+            .friend-cards {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+        
         @media (max-width: 1024px) {
             .container {
                 grid-template-columns: 1fr;
+                padding: calc(var(--header-height) + 20px) 20px 20px;
             }
             
-            .sidebar {
-                grid-column: 1;
-                grid-template-columns: repeat(2, 1fr);
-                display: grid;
-                gap: 20px;
+            .friend-cards {
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             }
         }
         
@@ -599,26 +616,25 @@
                     <div class="page-meta">
                         <div class="meta-item">
                             <i class="far fa-calendar"></i>
-                            <span>2025-10-15 星期三</span>
+                            <span id="current-time"></span>
                         </div>
                         <div class="meta-item">
-                            <i class="far fa-comment"></i>
-                            <span>1 条评论</span>
+                            <!-- <i class="far fa-comment"></i> -->
+                            <!-- <span>1 条评论</span> -->
                         </div>
                     </div>
                 </div>
             </div>
             
             <div class="friend-section">
-                <h2 class="section-title">友友</h2>
+                <h2 class="section-title">我的友友们</h2>
                 <div class="friend-cards">
-                    <div class="friend-card">
+                    <a class="friend-card" href="https://blog.811311.xyz/" target="_blank" rel="noopener noreferrer">
                         <div class="friend-header">
-                            <img src="https://q2.qlogo.cn/headimg_dl?dst_uin=2739043475&spec=5" alt="哈基米" class="friend-avatar">
+                            <img src="https://q2.qlogo.cn/headimg_dl?dst_uin=2739043475&spec=5" alt="白夭夭" class="friend-avatar">
                             <div class="friend-info">
                                 <h3 class="friend-name">白夭夭</h3>
-                                <a href="https://blog.811311.xyz/" class="friend-link" target="_blank">夭夭的博客</a>
-                                <a href="https://811311.xyz/" class="friend-link" target="_blank">主页</a>                              
+                                <span class="friend-link">夭夭的博客</span>
                             </div>
                         </div>
                         <p class="friend-desc">夭夭随笔，选择性失忆综合症</p>
@@ -627,15 +643,16 @@
                             <span class="friend-tag">美食</span>
                             <span class="friend-tag">夭夭回忆录</span>
                         </div>
-                    </div>
+                    </a>
                 </div>
-                               <div class="friend-cards">
-                    <div class="friend-card">
+
+                <div class="friend-cards" style="margin-top:18px">
+                    <a class="friend-card" href="https://blog.hslzz.cn/" target="_blank" rel="noopener noreferrer">
                         <div class="friend-header">
-                            <img src="https://hslzz.cn/assets/img/favicon.png" alt="哈基米" class="friend-avatar">
+                            <img src="https://hslzz.cn/assets/img/favicon.png" alt="花生莲子粥" class="friend-avatar">
                             <div class="friend-info">
                                 <h3 class="friend-name">花生莲子粥</h3>
-                                <a href="https://blog.hslzz.cn/" class="friend-link" target="_blank">花生莲子粥の小窝</a>                             
+                                <span class="friend-link">花生莲子粥の小窝</span>
                             </div>
                         </div>
                         <p class="friend-desc">与世无争，不染于泥</p>
@@ -644,27 +661,29 @@
                             <span class="friend-tag">服务器运维</span>
                             <span class="friend-tag">Ubuntu</span>
                         </div>
-                    </div>
+                    </a>
                 </div> 
             </div>
             
             <div class="friend-section">
-                <h2 class="section-title">博客</h2>
+                <h2 class="section-title">项目开发者</h2>
                 <div class="friend-cards">
-                    <div class="friend-card">
+                    <a class="friend-card" href="https://webui.nbgui.top/" target="_blank" rel="noopener noreferrer">
                         <div class="friend-header">
-                            <img src="https://q1.qlogo.cn/g?b=qq&nk=3188468169&s=640" alt="墨希MoXiify" class="friend-avatar">
+                            <img src="https://webui.nbgui.top/logo.png" alt="墨希MoXiify" class="friend-avatar">
                             <div class="friend-info">
-                                <h3 class="friend-name">墨希MoXiify</h3>
-                                <a href="https://note.moxiify.cn" class="friend-link" target="_blank">主页</a>
+                                <h3 class="friend-name">NoneBot WebUI</h3>
+                                <span class="friend-link"></span>
                             </div>
                         </div>
-                        <p class="friend-desc">做一条，逆流的鱼。分享技术笔记和生活感悟。</p>
+                        <!-- <p class="friend-desc">【夜风】NightWind</p> -->
+                        <p class="friend-desc">新一代 NoneBot Web 管理界面</p>
                         <div class="friend-tags">
-                            <span class="friend-tag">技术</span>
-                            <span class="friend-tag">生活</span>
+                            <span class="friend-tag">NoneBot</span>
+                            <span class="friend-tag">WebUI</span>
+                            <span class="friend-tag">[夜风] NightWind</span>
                         </div>
-                    </div>
+                    </a>
                 
                 </div>
             </div>
@@ -779,84 +798,83 @@ icon: # 头像/图标
     </footer>
 
     <script>
-        // 深色模式切换
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeIcon = themeToggle.querySelector('i');
-        
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            
-            document.body.setAttribute('data-theme', newTheme);
-            themeIcon.className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-            
-            localStorage.setItem('theme', newTheme);
-        });
-        
-        // 检查本地存储的主题设置
+      // 合并：主题切换 + 选项卡功能 + PWA 安装逻辑 + ServiceWorker 注册（避免重复声明）
+      (function () {
+        // 主题切换
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = themeToggleBtn && themeToggleBtn.querySelector('i');
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
-            document.body.setAttribute('data-theme', savedTheme);
-            themeIcon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+          document.body.setAttribute('data-theme', savedTheme);
+          if (themeIcon) themeIcon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
         }
-        
+
+        if (themeToggleBtn) {
+          themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.body.setAttribute('data-theme', newTheme);
+            if (themeIcon) themeIcon.className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+            localStorage.setItem('theme', newTheme);
+          });
+        }
+
         // 选项卡功能
         const tabs = document.querySelectorAll('.tab');
         const tabContents = document.querySelectorAll('.tab-content');
-        
         tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const tabId = tab.getAttribute('data-tab');
-                
-                // 移除所有活动状态
-                tabs.forEach(t => t.classList.remove('active'));
-                tabContents.forEach(content => content.classList.remove('active'));
-                
-                // 添加当前活动状态
-                tab.classList.add('active');
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
-    </script>
-
-    <!-- PWA：注册 Service Worker & 处理安装流程 -->
-    <script>
-      // 注册 service worker
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function () {
-          navigator.serviceWorker.register('/service-worker.js').catch(err => {
-            console.warn('SW 注册失败:', err);
+          tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            tab.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
           });
         });
-      }
 
-      // 安装流程（beforeinstallprompt）
-      let deferredPrompt;
-      const installBtn = document.getElementById('install-btn');
-      window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        // 显示安装按钮
-        installBtn.style.display = 'inline-flex';
-      });
+        // 实时时分秒显示（每秒更新）
+        (function () {
+          const el = document.getElementById('current-time');
+          if (!el) return;
+          const pad = n => String(n).padStart(2, '0');
+          const weekdays = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
+          function render() {
+            const d = new Date();
+            el.textContent = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${weekdays[d.getDay()]} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+          }
+          render();
+          setInterval(render, 1000);
+        })();
 
-      installBtn.addEventListener('click', async () => {
-        if (!deferredPrompt) return;
-        deferredPrompt.prompt();
-        const choiceResult = await deferredPrompt.userChoice;
-        deferredPrompt = null;
-        installBtn.style.display = 'none';
-        console.log('用户选择: ', choiceResult.outcome);
-      });
+        // PWA 安装（beforeinstallprompt）
+        let deferredPrompt;
+        const installBtn = document.getElementById('install-btn');
+        window.addEventListener('beforeinstallprompt', (e) => {
+          e.preventDefault();
+          deferredPrompt = e;
+          if (installBtn) installBtn.style.display = 'inline-flex';
+        });
 
-      // 恢复主题图标状态
-      const themeToggle = document.getElementById('theme-toggle');
-      const themeIcon = themeToggle.querySelector('i');
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        document.body.setAttribute('data-theme', savedTheme);
-        themeIcon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-      }
+        if (installBtn) {
+          installBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            const choiceResult = await deferredPrompt.userChoice;
+            deferredPrompt = null;
+            installBtn.style.display = 'none';
+            console.log('用户选择: ', choiceResult.outcome);
+          });
+        }
+
+        // 注册 service worker
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', function () {
+            navigator.serviceWorker.register('/service-worker.js').catch(err => {
+              console.warn('SW 注册失败:', err);
+            });
+          });
+        }
+      })();
     </script>
 </body>
 </html>
