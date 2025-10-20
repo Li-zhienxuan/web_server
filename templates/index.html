@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover">
@@ -12,7 +13,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="LilyXUAN">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <link rel="apple-touch-icon" href="https://avatars.githubusercontent.com/u/119688450?s=400&u=e39baacf67caa1806c65aab8f29c97d588059d44&v=4">
+    <link rel="apple-touch-icon"
+        href="https://avatars.githubusercontent.com/u/119688450?s=400&u=e39baacf67caa1806c65aab8f29c97d588059d44&v=4">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -22,7 +24,7 @@
             box-sizing: border-box;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
-        
+
         :root {
             --themecolor: #ea868f;
             --themehovercolor: #DB2777;
@@ -33,7 +35,7 @@
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             --header-height: 80px;
         }
-        
+
         [data-theme="dark"] {
             --themecolor: #b45864;
             --themehovercolor: #d72b6f;
@@ -43,7 +45,7 @@
             --border-color: #444444;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
-        
+
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
@@ -53,7 +55,7 @@
             display: flex;
             flex-direction: column;
         }
-        
+
         /* 顶部导航栏 */
         .top-nav {
             position: fixed;
@@ -69,31 +71,31 @@
             justify-content: space-between;
             padding: 0 5%;
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
             gap: 15px;
         }
-        
+
         .logo-img {
             width: 50px;
             height: 50px;
             border-radius: 50%;
             object-fit: cover;
         }
-        
+
         .logo-text {
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--themecolor);
         }
-        
+
         .main-nav {
             display: flex;
             gap: 30px;
         }
-        
+
         .nav-link {
             color: var(--text-color);
             text-decoration: none;
@@ -102,24 +104,25 @@
             border-radius: 6px;
             transition: all 0.3s;
         }
-        
-        .nav-link:hover, .nav-link.active {
+
+        .nav-link:hover,
+        .nav-link.active {
             background-color: var(--themecolor);
             color: white;
         }
-        
+
         .nav-right {
             display: flex;
             align-items: center;
             gap: 20px;
         }
-        
+
         /* 社交图标 */
         .social-links {
             display: flex;
             gap: 15px;
         }
-        
+
         .social-link {
             display: flex;
             align-items: center;
@@ -133,13 +136,13 @@
             box-shadow: var(--shadow);
             transition: all 0.3s;
         }
-        
+
         .social-link:hover {
             background-color: var(--themecolor);
             color: white;
             transform: translateY(-3px);
         }
-        
+
         /* 深色模式切换按钮 */
         .theme-toggle {
             background: var(--card-bg);
@@ -153,7 +156,7 @@
             cursor: pointer;
             box-shadow: var(--shadow);
         }
-        
+
         /* 主要内容区域 */
         .container {
             width: 100%;
@@ -165,7 +168,7 @@
             grid-template-columns: minmax(0, 1fr) 360px;
             gap: 40px;
         }
-        
+
         /* 左侧内容区域 */
         .main-content {
             background-color: var(--card-bg);
@@ -173,7 +176,7 @@
             padding: 40px;
             box-shadow: var(--shadow);
         }
-        
+
         .page-header {
             display: flex;
             align-items: center;
@@ -181,7 +184,7 @@
             padding-bottom: 20px;
             border-bottom: 1px solid var(--border-color);
         }
-        
+
         .author-avatar {
             width: 60px;
             height: 60px;
@@ -189,14 +192,14 @@
             margin-right: 20px;
             object-fit: cover;
         }
-        
+
         .page-title {
             font-size: 2.2rem;
             margin-bottom: 5px;
             position: relative;
             display: inline-block;
         }
-        
+
         .page-title::after {
             content: '';
             position: absolute;
@@ -207,7 +210,7 @@
             background-color: var(--themecolor);
             border-radius: 2px;
         }
-        
+
         .page-meta {
             display: flex;
             gap: 20px;
@@ -215,44 +218,33 @@
             color: #7f8c8d;
             font-size: 0.9rem;
         }
-        
+
         .meta-item {
             display: flex;
             align-items: center;
             gap: 5px;
         }
-        
+
         /* 友链分组 */
         .friend-section {
             margin-bottom: 50px;
+            /* 保持横向并列，允许换行 */
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            align-items: flex-start;
         }
-        
-        .section-title {
-            font-size: 1.6rem;
-            margin-bottom: 25px;
-            color: var(--themecolor);
-            position: relative;
-            padding-left: 15px;
-        }
-        
-        .section-title::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 4px;
-            height: 20px;
-            background-color: var(--themecolor);
-            border-radius: 2px;
-        }
-        
-        /* 友链卡片样式优化 */
+
+        /* 每个 .friend-cards 作为一个紧凑的列容器，不占满整行，
+           当一个 .friend-cards 内有多个卡片时也按列排列，和“项目开发者”组行为一致 */
         .friend-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            width: 100%;
+            display: inline-grid;
+            grid-auto-flow: column;
+            grid-auto-columns: 320px; /* 固定卡片显示宽度，长宽保持不变 */
+            gap: 18px;
+            align-items: start;
+            vertical-align: top;
+            min-width: 0;
         }
 
         .friend-card {
@@ -261,17 +253,25 @@
             flex-direction: column;
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 20px;
-            transition: all 0.3s ease;
+            padding: 16px;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
             border: 1px solid var(--border-color);
             text-decoration: none; /* 移除下划线 */
             overflow: hidden;
+            box-sizing: border-box;
+            height: auto; /* 不强制等高，标签区贴底 */
+            width: 100%; /* 适配 grid-auto-columns 指定的宽度 */
+            max-width: 320px;
+            break-inside: avoid;
         }
 
-        .friend-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border-color: var(--themecolor);
+        /* 让卡片内容撑满高度，标签区贴底 */
+        .friend-header + .friend-desc {
+            margin-bottom: 12px;
+        }
+
+        .friend-tags {
+            margin-top: auto;
         }
 
         .friend-header {
@@ -283,7 +283,8 @@
         .friend-avatar {
             width: 54px;
             height: 54px;
-            border-radius: 12px; /* 方形圆角头像 */
+            border-radius: 12px;
+            /* 方形圆角头像 */
             object-fit: cover;
             transition: transform 0.3s ease;
         }
@@ -345,72 +346,72 @@
             padding-top: 30px;
             border-top: 1px solid var(--border-color);
         }
-        
+
         .tabs {
             display: flex;
             border-bottom: 1px solid var(--border-color);
             margin-bottom: 20px;
         }
-        
+
         .tab {
             padding: 12px 25px;
             cursor: pointer;
             border-bottom: 2px solid transparent;
             transition: all 0.3s;
         }
-        
+
         .tab.active {
             border-bottom: 2px solid var(--themecolor);
             color: var(--themecolor);
         }
-        
+
         .tab-content {
             display: none;
             padding: 20px 0;
         }
-        
+
         .tab-content.active {
             display: block;
         }
-        
+
         .blog-info {
             background-color: rgba(234, 134, 143, 0.1);
             border-radius: 8px;
             padding: 25px;
             margin-bottom: 20px;
         }
-        
+
         .info-title {
             font-weight: 600;
             margin-bottom: 15px;
             color: var(--themecolor);
             font-size: 1.2rem;
         }
-        
+
         .info-item {
             margin-bottom: 10px;
             display: flex;
         }
-        
+
         .info-label {
             min-width: 80px;
             font-weight: 500;
         }
-        
+
         .requirements {
             margin-bottom: 20px;
         }
-        
+
         .requirement-list {
             padding-left: 20px;
             margin: 20px 0;
         }
-        
+
         .requirement-list li {
             margin-bottom: 10px;
             line-height: 1.5;
         }
-        
+
         .code-block {
             background-color: #2d2d2d;
             color: #f8f8f2;
@@ -421,21 +422,59 @@
             margin: 20px 0;
             line-height: 1.5;
         }
-        
+
         /* 侧边栏 */
         .sidebar {
             display: flex;
             flex-direction: column;
             gap: 30px;
         }
-        
+
+        /* 天气 / 访客 IP 小部件 */
+        .weather-widget {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 16px;
+            border-radius: 10px;
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            font-size: 0.95rem;
+        }
+
+        .weather-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .weather-icon {
+            font-size: 1.6rem;
+        }
+
+        .weather-location {
+            font-weight: 600;
+        }
+
+        .weather-temp {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--themecolor);
+        }
+
+        .weather-note {
+            color: #7f8c8d;
+            font-size: 0.85rem;
+        }
+
         .sidebar-widget {
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 25px;
             box-shadow: var(--shadow);
         }
-        
+
         .widget-title {
             font-size: 1.3rem;
             margin-bottom: 20px;
@@ -443,7 +482,7 @@
             position: relative;
             padding-bottom: 10px;
         }
-        
+
         .widget-title::after {
             content: '';
             position: absolute;
@@ -454,14 +493,16 @@
             background-color: var(--themecolor);
             border-radius: 2px;
         }
-        
-        .category-list, .tag-list {
+
+        .category-list,
+        .tag-list {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
         }
-        
-        .category-item, .tag-item {
+
+        .category-item,
+        .tag-item {
             background-color: var(--bg-color);
             padding: 8px 15px;
             border-radius: 20px;
@@ -470,17 +511,18 @@
             text-decoration: none;
             color: var(--text-color);
         }
-        
-        .category-item:hover, .tag-item:hover {
+
+        .category-item:hover,
+        .tag-item:hover {
             background-color: var(--themecolor);
             color: white;
         }
-        
+
         .search-form {
             display: flex;
             margin-top: 15px;
         }
-        
+
         .search-input {
             flex: 1;
             padding: 10px 15px;
@@ -489,7 +531,7 @@
             background-color: var(--bg-color);
             color: var(--text-color);
         }
-        
+
         .search-button {
             background-color: var(--themecolor);
             color: white;
@@ -498,7 +540,7 @@
             border-radius: 0 6px 6px 0;
             cursor: pointer;
         }
-        
+
         /* 页脚 */
         .footer {
             text-align: center;
@@ -508,68 +550,77 @@
             border-top: 1px solid var(--border-color);
             margin-top: 50px;
         }
-        
+
         /* 响应式设计 */
         @media (max-width: 1400px) {
             .friend-cards {
                 grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             }
         }
-        
+
         @media (max-width: 1024px) {
             .container {
                 grid-template-columns: 1fr;
                 padding: calc(var(--header-height) + 20px) 20px 20px;
             }
-            
+            /* 小屏时恢复传统网格布局，避免横向溢出 */
+            .friend-section {
+                display: block;
+            }
             .friend-cards {
+                display: grid;
+                grid-auto-flow: row;
                 grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+                width: 100%;
             }
         }
-        
+
         @media (max-width: 768px) {
             .top-nav {
                 padding: 0 20px;
             }
-            
+
             .main-nav {
                 display: none;
             }
-            
+
             .friend-cards {
                 grid-template-columns: 1fr;
             }
-            
+
             .sidebar {
                 grid-template-columns: 1fr;
             }
-            
+
             .container {
                 padding: calc(var(--header-height) + 20px) 20px 20px;
             }
         }
-        
+
         @media (max-width: 480px) {
             .logo-text {
                 font-size: 1.2rem;
             }
-            
+
             .social-links {
                 gap: 10px;
             }
-            
-            .social-link, .theme-toggle {
+
+            .social-link,
+            .theme-toggle {
                 width: 35px;
                 height: 35px;
             }
         }
     </style>
 </head>
+
 <body data-theme="light">
     <!-- 顶部导航栏 -->
     <nav class="top-nav">
         <div class="logo">
-            <img src="https://avatars.githubusercontent.com/u/119688450?s=400&u=e39baacf67caa1806c65aab8f29c97d588059d44&v=4" alt="LilyXUAN" class="logo-img">
+            <img src="https://avatars.githubusercontent.com/u/119688450?s=400&u=e39baacf67caa1806c65aab8f29c97d588059d44&v=4"
+                alt="LilyXUAN" class="logo-img">
             <div class="logo-text">LilyXUAN</div>
         </div>
         <div class="main-nav">
@@ -610,7 +661,8 @@
         <!-- 左侧内容 -->
         <main class="main-content">
             <div class="page-header">
-                <img src="https://avatars.githubusercontent.com/u/119688450?s=400&u=e39baacf67caa1806c65aab8f29c97d588059d44&v=4" alt="作者头像" class="author-avatar">
+                <img src="https://avatars.githubusercontent.com/u/119688450?s=400&u=e39baacf67caa1806c65aab8f29c97d588059d44&v=4"
+                    alt="作者头像" class="author-avatar">
                 <div>
                     <h1 class="page-title">友链</h1>
                     <div class="page-meta">
@@ -625,13 +677,14 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="friend-section">
                 <h2 class="section-title">我的友友们</h2>
                 <div class="friend-cards">
                     <a class="friend-card" href="https://blog.811311.xyz/" target="_blank" rel="noopener noreferrer">
                         <div class="friend-header">
-                            <img src="https://q2.qlogo.cn/headimg_dl?dst_uin=2739043475&spec=5" alt="白夭夭" class="friend-avatar">
+                            <img src="https://q2.qlogo.cn/headimg_dl?dst_uin=2739043475&spec=5" alt="白夭夭"
+                                class="friend-avatar">
                             <div class="friend-info">
                                 <h3 class="friend-name">白夭夭</h3>
                                 <span class="friend-link">夭夭的博客</span>
@@ -662,9 +715,47 @@
                             <span class="friend-tag">Ubuntu</span>
                         </div>
                     </a>
-                </div> 
+                </div>
+                <div class="friend-cards" style="margin-top:18px">
+                    <a class="friend-card" href="https://space.bilibili.com/3546554881280375" target="_blank"
+                        rel="noopener noreferrer">
+                        <div class="friend-header">
+                            <img src="/image/taomuyu.jpg" alt="桃木雨" class="friend-avatar">
+                            <div class="friend-info">
+                                <h3 class="friend-name">桃木雨</h3>
+                                <span class="friend-link">好巧，你也喜欢我呀，那我们真是太有眼光了 谁要给我讲八卦［举手］</span>
+                            </div>
+                        </div>
+                        <p class="friend-desc">我的被子生病了，我要在床上照顾它</p>
+                        <div class="friend-tags">
+                            <span class="friend-tag">吉他</span>
+                            <span class="friend-tag">尤克里里</span>
+                            <span class="friend-tag">弹唱</span>
+                            <span class="friend-tag">八卦</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="friend-cards" style="margin-top:18px">
+                    <a class="friend-card" href="https://space.bilibili.com/1164913332" target="_blank"
+                        rel="noopener noreferrer">
+                        <div class="friend-header">
+                            <img src="/image/PearLight.jpg" alt="梨子Light" class="friend-avatar">
+                            <div class="friend-info">
+                                <h3 class="friend-name">梨子Light</h3>
+                                <span class="friend-link">至少还有你，值得我去珍惜</span>
+                            </div>
+                        </div>
+                        <p class="friend-desc">日常乱唱ing</p>
+                        <div class="friend-tags">
+                            <span class="friend-tag">吉他</span>
+                            <span class="friend-tag">尤克里里</span>
+                            <span class="friend-tag">弹唱</span>
+                            <span class="friend-tag">八卦</span>
+                        </div>
+                    </a>
+                </div>
             </div>
-            
+
             <div class="friend-section">
                 <h2 class="section-title">项目开发者</h2>
                 <div class="friend-cards">
@@ -684,19 +775,19 @@
                             <span class="friend-tag">[夜风] NightWind</span>
                         </div>
                     </a>
-                
+
                 </div>
             </div>
-            
+
             <div class="apply-section">
                 <h2 class="section-title">结友</h2>
-                
+
                 <div class="tabs">
                     <div class="tab active" data-tab="blog-info">博客信息</div>
                     <div class="tab" data-tab="requirements">友链要求</div>
                     <div class="tab" data-tab="apply">申请友链</div>
                 </div>
-                
+
                 <div class="tab-content active" id="blog-info">
                     <div class="blog-info">
                         <div class="info-title">LilyXUAN / 哈基轩</div>
@@ -714,11 +805,12 @@
                         </div>
                         <div class="info-item">
                             <span class="info-label">头像：</span>
-                            <span><a href="https://avatars.githubusercontent.com/u/119688450?s=400&u=e39baacf67caa1806c65aab8f29c97d588059d44&v=4" target="_blank">点击查看</a></span>
+                            <span><a href="https://avatars.githubusercontent.com/u/119688450?s=400&u=e39baacf67caa1806c65aab8f29c97d588059d44&v=4"
+                                    target="_blank">点击查看</a></span>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="tab-content" id="requirements">
                     <div class="requirements">
                         <p>友链有以下要求：</p>
@@ -732,21 +824,21 @@
                         <p>留好友链后可以留言，如果合适会为您添加友链，谢谢</p>
                     </div>
                 </div>
-                
+
                 <div class="tab-content" id="apply">
                     <p>如果你想申请友链，留下你的信息</p>
                     <p>友链申请部分站长正在开发中，有需要请直接主页邮箱联系，喵喵喵~</p>
                     <p>参考内容如下：</p>
                     <div class="code-block">
-name: # 昵称/博客名称<br>
-desc: # 个人描述<br>
-link: # 博客地址<br>
-icon: # 头像/图标
+                        name: # 昵称/博客名称<br>
+                        desc: # 个人描述<br>
+                        link: # 博客地址<br>
+                        icon: # 头像/图标
                     </div>
                 </div>
             </div>
         </main>
-        
+
         <!-- 右侧边栏 -->
         <aside class="sidebar">
             <div class="sidebar-widget">
@@ -758,39 +850,54 @@ icon: # 头像/图标
                     </button>
                 </form>
             </div>
-            
+
+            <!-- 访客 IP 与天气 -->
+            <div id="weather-widget" class="weather-widget" aria-live="polite">
+                <div class="weather-top">
+                    <div class="weather-icon" id="weather-icon">🌤️</div>
+                    <div>
+                        <div class="weather-location" id="weather-location">正在获取位置…</div>
+                        <div class="weather-note" id="visitor-ip">IP: —</div>
+                    </div>
+                </div>
+                <div>
+                    <div>当前： <span class="weather-temp" id="weather-temp">--°C</span></div>
+                    <div class="weather-note" id="weather-desc">—</div>
+                </div>
+            </div>
+
             <div class="sidebar-widget">
                 <h3 class="widget-title">分类</h3>
                 <div class="category-list">
                     <a href="#" class="category-item">技术</a>
                     <a href="#" class="category-item">生活</a>
-                    <a href="#" class="category-item">设计</a>
+                    <!-- <a href="#" class="category-item">设计</a> -->
                     <a href="#" class="category-item">随笔</a>
-                    <a href="#" class="category-item">旅行</a>
+                    <!-- <a href="#" class="category-item">旅行</a> -->
                 </div>
             </div>
-            
+
             <div class="sidebar-widget">
                 <h3 class="widget-title">标签</h3>
                 <div class="tag-list">
-                    <a href="#" class="tag-item">前端</a>
-                    <a href="#" class="tag-item">JavaScript</a>
-                    <a href="#" class="tag-item">CSS</a>
-                    <a href="#" class="tag-item">React</a>
-                    <a href="#" class="tag-item">Vue</a>
-                    <a href="#" class="tag-item">Node.js</a>
-                    <a href="#" class="tag-item">设计</a>
-                    <a href="#" class="tag-item">UX</a>
+                    <!-- <a href="#" class="tag-item">前端</a> -->
+                    <!-- <a href="#" class="tag-item">JavaScript</a> -->
+                    <!-- <a href="#" class="tag-item">CSS</a> -->
+                    <!-- <a href="#" class="tag-item">React</a> -->
+                    <!-- <a href="#" class="tag-item">Vue</a> -->
+                    <!-- <a href="#" class="tag-item">Node.js</a> -->
+                    <!-- <a href="#" class="tag-item">设计</a> -->
+                    <!-- <a href="#" class="tag-item">UX</a> -->
                 </div>
             </div>
-            
+
             <div class="sidebar-widget">
                 <h3 class="widget-title">关于</h3>
                 <p>这里是LilyXUAN的个人空间，记录技术学习、生活感悟和创意设计。</p>
             </div>
         </aside>
     </div>
-    
+
     <!-- 页脚 -->
     <footer class="footer">
         <p>© 2025 LilyXUAN · Lily & 哈基轩的空间</p>
@@ -798,83 +905,196 @@ icon: # 头像/图标
     </footer>
 
     <script>
-      // 合并：主题切换 + 选项卡功能 + PWA 安装逻辑 + ServiceWorker 注册（避免重复声明）
-      (function () {
-        // 主题切换
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const themeIcon = themeToggleBtn && themeToggleBtn.querySelector('i');
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-          document.body.setAttribute('data-theme', savedTheme);
-          if (themeIcon) themeIcon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-        }
-
-        if (themeToggleBtn) {
-          themeToggleBtn.addEventListener('click', () => {
-            const currentTheme = document.body.getAttribute('data-theme') || 'light';
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            document.body.setAttribute('data-theme', newTheme);
-            if (themeIcon) themeIcon.className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-            localStorage.setItem('theme', newTheme);
-          });
-        }
-
-        // 选项卡功能
-        const tabs = document.querySelectorAll('.tab');
-        const tabContents = document.querySelectorAll('.tab-content');
-        tabs.forEach(tab => {
-          tab.addEventListener('click', () => {
-            const tabId = tab.getAttribute('data-tab');
-            tabs.forEach(t => t.classList.remove('active'));
-            tabContents.forEach(content => content.classList.remove('active'));
-            tab.classList.add('active');
-            document.getElementById(tabId).classList.add('active');
-          });
-        });
-
-        // 实时时分秒显示（每秒更新）
+        // 合并：主题切换 + 选项卡功能 + PWA 安装逻辑 + ServiceWorker 注册（避免重复声明）
         (function () {
-          const el = document.getElementById('current-time');
-          if (!el) return;
-          const pad = n => String(n).padStart(2, '0');
-          const weekdays = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
-          function render() {
-            const d = new Date();
-            el.textContent = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${weekdays[d.getDay()]} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-          }
-          render();
-          setInterval(render, 1000);
-        })();
+            // 主题切换
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const themeIcon = themeToggleBtn && themeToggleBtn.querySelector('i');
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.body.setAttribute('data-theme', savedTheme);
+                if (themeIcon) themeIcon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+            }
 
-        // PWA 安装（beforeinstallprompt）
-        let deferredPrompt;
-        const installBtn = document.getElementById('install-btn');
-        window.addEventListener('beforeinstallprompt', (e) => {
-          e.preventDefault();
-          deferredPrompt = e;
-          if (installBtn) installBtn.style.display = 'inline-flex';
-        });
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', () => {
+                    const currentTheme = document.body.getAttribute('data-theme') || 'light';
+                    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                    document.body.setAttribute('data-theme', newTheme);
+                    if (themeIcon) themeIcon.className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+                    localStorage.setItem('theme', newTheme);
+                });
+            }
 
-        if (installBtn) {
-          installBtn.addEventListener('click', async () => {
-            if (!deferredPrompt) return;
-            deferredPrompt.prompt();
-            const choiceResult = await deferredPrompt.userChoice;
-            deferredPrompt = null;
-            installBtn.style.display = 'none';
-            console.log('用户选择: ', choiceResult.outcome);
-          });
-        }
-
-        // 注册 service worker
-        if ('serviceWorker' in navigator) {
-          window.addEventListener('load', function () {
-            navigator.serviceWorker.register('/service-worker.js').catch(err => {
-              console.warn('SW 注册失败:', err);
+            // 选项卡功能
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
             });
-          });
-        }
-      })();
+
+            // 实时时分秒显示（每秒更新）
+            (function () {
+                const el = document.getElementById('current-time');
+                if (!el) return;
+                const pad = n => String(n).padStart(2, '0');
+                const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+                function render() {
+                    const d = new Date();
+                    el.textContent = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${weekdays[d.getDay()]} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+                }
+                render();
+                setInterval(render, 1000);
+            })();
+
+            // 获取访客 IP 与天气（多服务回退 + 超时 + geolocation 备用）
+            (function () {
+                const ipEl = document.getElementById('visitor-ip');
+                const locEl = document.getElementById('weather-location');
+                const tempEl = document.getElementById('weather-temp');
+                const descEl = document.getElementById('weather-desc');
+                const iconEl = document.getElementById('weather-icon');
+
+                const timeout = (ms) => new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms));
+                const fetchJSON = (url, ms = 6000) => Promise.race([fetch(url).then(r => r.ok ? r.json() : Promise.reject(r)), timeout(ms)]);
+
+                function weatherCodeToText(code) {
+                    if (code === 0) return '晴朗';
+                    if (code <= 3) return '多云';
+                    if (code === 45 || code === 48) return '雾';
+                    if (code >= 51 && code <= 67) return '小雨';
+                    if (code >= 71 && code <= 77) return '小雪';
+                    if (code >= 80 && code <= 82) return '阵雨';
+                    if (code >= 95) return '雷暴';
+                    return '多变';
+                }
+                function weatherCodeToEmoji(code) {
+                    if (code === 0) return '☀️';
+                    if (code <= 3) return '⛅';
+                    if (code === 45 || code === 48) return '🌫️';
+                    if (code >= 51 && code <= 67) return '🌧️';
+                    if (code >= 71 && code <= 77) return '❄️';
+                    if (code >= 80 && code <= 82) return '🌦️';
+                    if (code >= 95) return '⚡';
+                    return '🌤️';
+                }
+
+                async function getIpData() {
+                    const services = [
+                        'https://ipapi.co/json/',
+                        'https://ipwho.is/json/'
+                    ];
+                    for (const url of services) {
+                        try {
+                            const d = await fetchJSON(url, 6000);
+                            if (d && (d.ip || d.success === true || d.ip_address)) return d;
+                        } catch (e) {
+                            // 继续下一个服务
+                        }
+                    }
+                    return null;
+                }
+
+                async function getCoordsViaGeolocation() {
+                    if (!navigator.geolocation) return null;
+                    return new Promise((resolve) => {
+                        const done = (pos) => resolve({ latitude: pos.coords.latitude, longitude: pos.coords.longitude });
+                        const fail = () => resolve(null);
+                        navigator.geolocation.getCurrentPosition(done, fail, { maximumAge: 600000, timeout: 8000 });
+                    });
+                }
+
+                (async () => {
+                    try {
+                        const data = await getIpData();
+                        let lat = null, lon = null;
+                        if (data) {
+                            const ip = data.ip || data.ip_address || '—';
+                            if (ipEl) ipEl.textContent = `IP: ${ip}`;
+                            const city = data.city || data.city || '';
+                            const region = data.region || data.region || data.regionName || '';
+                            const country = data.country_name || data.country || data.countryCode || '';
+                            if (locEl) locEl.textContent = [city, region, country].filter(Boolean).join(' · ') || '未知位置';
+                            lat = data.latitude ?? data.lat ?? data.latitude;
+                            lon = data.longitude ?? data.lon ?? data.longitude;
+                        } else {
+                            if (ipEl) ipEl.textContent = 'IP: 无法获取';
+                            if (locEl) locEl.textContent = '尝试定位中…';
+                        }
+
+                        if (lat == null || lon == null) {
+                            // 尝试浏览器定位
+                            const geo = await getCoordsViaGeolocation();
+                            if (geo) {
+                                lat = geo.latitude;
+                                lon = geo.longitude;
+                                if (locEl && (!locEl.textContent || locEl.textContent === '尝试定位中…')) locEl.textContent = '通过浏览器定位';
+                            }
+                        }
+
+                        if (lat != null && lon != null) {
+                            const url = `https://api.open-meteo.com/v1/forecast?latitude=${encodeURIComponent(lat)}&longitude=${encodeURIComponent(lon)}&current_weather=true&timezone=auto`;
+                            try {
+                                const w = await fetchJSON(url, 7000);
+                                const cw = w.current_weather || {};
+                                const temp = cw.temperature;
+                                const code = cw.weathercode;
+                                const wind = cw.windspeed;
+                                if (tempEl) tempEl.textContent = (temp != null) ? `${Number(temp).toFixed(1)}°C` : '--°C';
+                                if (descEl) descEl.textContent = `${weatherCodeToText(code)} · 风 ${wind ?? '--'} km/h`;
+                                if (iconEl) iconEl.textContent = weatherCodeToEmoji(code);
+                            } catch (e) {
+                                if (descEl) descEl.textContent = '天气服务不可用';
+                            }
+                        } else {
+                            if (descEl) descEl.textContent = '无法获取经纬度';
+                            if (tempEl) tempEl.textContent = '--°C';
+                            if (iconEl) iconEl.textContent = '—';
+                        }
+                    } catch (e) {
+                        if (ipEl) ipEl.textContent = 'IP: 无法获取';
+                        if (locEl) locEl.textContent = '未知位置';
+                        if (descEl) descEl.textContent = '天气服务不可用';
+                    }
+                })();
+            })();
+
+            // PWA 安装（beforeinstallprompt）
+            let deferredPrompt;
+            const installBtn = document.getElementById('install-btn');
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                if (installBtn) installBtn.style.display = 'inline-flex';
+            });
+
+            if (installBtn) {
+                installBtn.addEventListener('click', async () => {
+                    if (!deferredPrompt) return;
+                    deferredPrompt.prompt();
+                    const choiceResult = await deferredPrompt.userChoice;
+                    deferredPrompt = null;
+                    installBtn.style.display = 'none';
+                    console.log('用户选择: ', choiceResult.outcome);
+                });
+            }
+
+            // 注册 service worker
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('/service-worker.js').catch(err => {
+                        console.warn('SW 注册失败:', err);
+                    });
+                });
+            }
+        })();
     </script>
 </body>
+
 </html>
