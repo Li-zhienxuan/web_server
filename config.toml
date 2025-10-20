@@ -1,12 +1,12 @@
-base_url = "https://Li-zhienxuan.github.io/web_server"
-title = "LilyXUAN"
-description = "Lily & 哈基轩的空间"
+base_url = "https://li-zhienxuan.github.io/web_server"
+title = "lilyXUAN"
+description = "lily & 哈基轩的空间"
 
 # theme = "hermit"
 
 build_search_index = true
 compile_sass = true
-highlight_code = true
+
 
 # 分类系统定义
 taxonomies = [
@@ -16,8 +16,8 @@ taxonomies = [
 
 [extra]
 # 作者信息
-author = "LilyXUAN"
-email = "Li.zhienxuan0516@gmail.com"  # 替换为你的邮箱
+author = "lilyXUAN"
+email = "li.zhienxuan0516@gmail.com"  # 替换为你的邮箱
 custom_css = ["css/global.css"]
 since = 2024
 
@@ -26,12 +26,12 @@ force_https = true
 
 # 社交链接
 gitee= "li-zhienxuan_study"  # 替换为你的Gitee ID
-github = "Li-zhienxuan"  # 替换为你的GitHub用户名
+github = "li-zhienxuan"  # 替换为你的GitHub用户名
 bilibili = "473911887"  # 替换为你的B站ID
 
 
 # 页脚信息
-footer_content = "© 2024-2025 LilyXUAN"
+footer_content = "© 2024-2025 lilyXUAN"
 
 # 功能开关
 copy_button = true
@@ -46,15 +46,14 @@ links = [
 
 # 社交图标显示
 [extra.social]
-email = "Li.zhienxuan0516@gmail.com"  # 替换为你的邮箱
+email = "li.zhienxuan0516@gmail.com"  # 替换为你的邮箱
 gitee= "li-zhienxuan_study"  # 替换为你的Gitee ID
-github = "Li-zhienxuan"  # 替换为你的GitHub用户名
+github = "li-zhienxuan"  # 替换为你的GitHub用户名
 bilibili = "473911887"  # 替换为你的B站ID
 
 
-# 代码高亮主题
-highlight_theme = "obsidian"
+
 
 [markdown]
 highlight_code = true
-
+highlight_theme = "base16-ocean-dark"  # 深色，很好看

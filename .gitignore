@@ -1,0 +1,42 @@
+# 备份配置文件
+config.toml.backup
+config.toml.backup_stable_running_20251015
+config.toml.backup20251012.20.02pm
+
+# 脚本文件（除了必要的部署脚本）
+batch-fix-posts.sh
+check-dirs.sh
+deep-fix.sh
+deploy.sh
+fix-403.sh
+fix-missing-frontmatter.sh
+new-post-smart.sh
+new-post.sh
+nezha.sh
+
+# Zola 构建输出
+public/
+__pycache__/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+*.tmp
+*.temp
+
+# 日志文件
+*.log
+
+# 本地开发文件
+.local/
+.idea/
+.vscode/
+
+# 环境变量和敏感文件
+.env
+*.key
+*.pem
+
+# 临时图片和缓存
+/cache/
+/temp/
