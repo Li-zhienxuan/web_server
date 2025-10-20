@@ -1,4 +1,4 @@
-base_url = "https://li-zhienxuan.github.io/web_server"
+base_url = "https://lilyxuan.online"
 title = "lilyXUAN"
 description = "lily & 哈基轩的空间"
 
@@ -22,7 +22,7 @@ custom_css = ["css/global.css"]
 since = 2024
 
 # 强制 HTTPS 相关设置
-force_https = true
+# force_https = true
 
 # 社交链接
 gitee= "li-zhienxuan_study"  # 替换为你的Gitee ID
