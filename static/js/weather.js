@@ -113,30 +113,48 @@ class WeatherWidget {
         }
     }
 
-    async getIpData() {
-        // 使用更稳定的IP API服务
-        const services = [
-            'https://api.ipify.org?format=json',
-            'https://jsonip.com/',
-            'https://api.db-ip.com/v2/free/self'
-        ];
+// 替换 getIpData 方法为这个更稳定的版本
+async getIpData() {
+    // 使用更稳定的IP和位置API，避免CORS问题
+    const services = [
+        'https://api.ip.sb/geoip',  // 稳定且支持CORS
+        'https://ipapi.co/json/',   // 主要备用
+        'http://ip-api.com/json/'   // HTTP备用（某些环境可用）
+    ];
 
-        for (const url of services) {
-            try {
-                const data = await this.fetchWithTimeout(url, 5000);
-                if (data && (data.ip || data.ipAddress)) {
-                    // 获取位置信息的备用服务
-                    const ip = data.ip || data.ipAddress;
-                    const locationData = await this.fetchWithTimeout(`http://ip-api.com/json/${ip}`, 5000);
-                    return { ip, ...locationData };
-                }
-            } catch (error) {
-                console.log(`IP服务 ${url} 失败:`, error.message);
-                continue;
+    for (const url of services) {
+        try {
+            // 对于HTTP服务，捕获可能的CORS错误
+            const data = await this.fetchWithTimeout(url, 5000);
+            
+            if (data && (data.ip || data.ip_address || data.query)) {
+                console.log(`成功从 ${url} 获取IP数据`);
+                return {
+                    ip: data.ip || data.ip_address || data.query,
+                    city: data.city || '',
+                    region: data.region || data.regionName || data.region_code || '',
+                    country: data.country || data.country_name || data.country_code || '',
+                    lat: data.latitude || data.lat,
+                    lon: data.longitude || data.lon
+                };
             }
+        } catch (error) {
+            console.log(`IP服务 ${url} 失败:`, error.message);
+            continue;
         }
-        return null;
     }
+    
+    // 所有服务都失败时返回默认数据
+    console.log('所有IP服务都失败，使用默认位置');
+    return {
+        ip: '无法获取',
+        city: '上海',
+        region: '上海',
+        country: '中国',
+        lat: 31.2304,
+        lon: 121.4737
+    };
+}
 
     async processWeatherData(data) {
         let lat = null, lon = null;
