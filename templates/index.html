@@ -13,15 +13,17 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="LilyXUAN">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <link rel="apple-touch-icon"  href="/images/main_icon.png">
+    <link rel="apple-touch-icon" href="/images/main_icon.png">
 
+    <!-- 字体图标 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link rel="stylesheet" href="/css/sidebar.css">
-    <link rel="stylesheet" href="/css/footer.css">
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/components.css">
-    <link rel="stylesheet" href="/css/friends.css">
+    <!-- CSS文件 - 按依赖顺序加载 -->
+    <link rel="stylesheet" href="/css/main.css"> <!-- 基础变量和重置 -->
+    <link rel="stylesheet" href="/css/components.css"> <!-- 通用组件 -->
+    <link rel="stylesheet" href="/css/friends.css"> <!-- 友链样式 -->
+    <link rel="stylesheet" href="/css/sidebar.css"> <!-- 侧边栏样式 -->
+    <link rel="stylesheet" href="/css/footer.css"> <!-- 页脚样式 -->
 
     <style>
         /* 页面整体布局 */
@@ -61,18 +63,18 @@
 
 
 
-            /* 小屏时恢复传统网格布局，避免横向溢出 */
-            .friend-section {
-                display: block;
-            }
+        /* 小屏时恢复传统网格布局，避免横向溢出 */
+        .friend-section {
+            display: block;
+        }
 
-            .friend-cards {
-                display: grid;
-                grid-auto-flow: row;
-                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-                width: 100%;
-            }
-        
+        .friend-cards {
+            display: grid;
+            grid-auto-flow: row;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            width: 100%;
+        }
+
 
         @media (max-width: 768px) {
             .top-nav {
@@ -118,8 +120,7 @@
     <!-- 顶部导航栏 -->
     <nav class="top-nav">
         <div class="logo">
-            <img src="/images/main_icon.png"
-                alt="哈基米的空间" class="logo-img">
+            <img src="/images/main_icon.png" alt="哈基米的空间" class="logo-img">
             <div class="logo-text">哈基米个人站</div>
         </div>
         <div class="main-nav">
@@ -160,8 +161,7 @@
         <!-- 左侧内容 -->
         <main class="main-content">
             <div class="page-header">
-                <img src="/images/main_icon.png"
-                    alt="作者头像" class="author-avatar">
+                <img src="/images/main_icon.png" alt="作者头像" class="author-avatar">
                 <div>
                     <h1 class="page-title">友链</h1>
                     <div class="page-meta">
@@ -256,7 +256,6 @@
                     </a>
                 </div>
             </div>
-
             <div class="friend-section">
                 <h2 class="section-title">项目开发者</h2>
                 <div class="friend-cards">
@@ -268,7 +267,6 @@
                                 <span class="friend-link"></span>
                             </div>
                         </div>
-                        <!-- <p class="friend-desc">【夜风】NightWind</p> -->
                         <p class="friend-desc">新一代 NoneBot Web 管理界面</p>
                         <div class="friend-tags">
                             <span class="friend-tag">NoneBot</span>
@@ -278,8 +276,6 @@
                     </a>
 
                 </div>
-
-
                 <div class="friend-cards" style="margin-top:18px">
                     <a class="friend-card" href="https://www.495000.xyz" target="_blank" rel="noopener noreferrer">
                         <div class="friend-header">
@@ -329,11 +325,10 @@
                         <div class="info-item">
                             <span class="info-label">头像：</span>
                             <span><a href="/images/main_icon.png" target="_blank">点击查看</a></span>
-                                   
+
                         </div>
                     </div>
                 </div>
-
                 <div class="tab-content" id="requirements">
                     <div class="requirements">
                         <p>友链有以下要求：</p>
@@ -347,17 +342,16 @@
                         <p>留好友链后可以留言，如果合适会为您添加友链，谢谢！</p>
                     </div>
                 </div>
-
                 <div class="tab-content" id="apply">
                     <p>如果你想申请友链，留下你的信息</p>
                     <p>友链申请部分站长正在开发中，有需要请直接主页邮箱联系，喵喵喵~</p>
                     <p>参考内容如下：</p>
                     <div class="code-block">
 
-                        name: 昵称<br
+                        name: 昵称<br>
                         desc: 个人描述<br>
                         link: 博客链接<br>
-                        icon: 头像链接<br>    
+                        icon: 头像链接<br>
                         tags: 标签1, 标签2, ...<br>
                         sublink: 副标题文本
                     </div>
@@ -391,32 +385,20 @@
                     <div class="weather-note" id="weather-desc">—</div>
                 </div>
             </div>
-
             <div class="sidebar-widget">
                 <h3 class="widget-title">分类</h3>
                 <div class="category-list">
                     <a href="#" class="category-item">技术</a>
                     <a href="#" class="category-item">生活</a>
-                    <!-- <a href="#" class="category-item">设计</a> -->
                     <a href="#" class="category-item">随笔</a>
-                    <!-- <a href="#" class="category-item">旅行</a> -->
+
                 </div>
             </div>
-
             <div class="sidebar-widget">
                 <h3 class="widget-title">标签</h3>
                 <div class="tag-list">
-                    <!-- <a href="#" class="tag-item">前端</a> -->
-                    <!-- <a href="#" class="tag-item">JavaScript</a> -->
-                    <!-- <a href="#" class="tag-item">CSS</a> -->
-                    <!-- <a href="#" class="tag-item">React</a> -->
-                    <!-- <a href="#" class="tag-item">Vue</a> -->
-                    <!-- <a href="#" class="tag-item">Node.js</a> -->
-                    <!-- <a href="#" class="tag-item">设计</a> -->
-                    <!-- <a href="#" class="tag-item">UX</a> -->
                 </div>
             </div>
-
             <div class="sidebar-widget">
                 <h3 class="widget-title">关于</h3>
                 <p>这里是哈基米个人站，分享技术，热爱生活</p>
@@ -431,209 +413,21 @@
                 style="color: #7c3aed; text-decoration: none; font-weight: bold;">Zola</a> ·Theme by 哈基米</p>
         <p style="line-height: 1.6;">
 
-            <p>本项目采用 <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noopener"
+        <p>本项目采用 <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noopener"
                 style="color: #2563eb; text-decoration: none; font-weight: bold;">
                 GPL v3.0
             </a> 许可证发布</p>
 
-            
-            <!-- · 自由使用 · 修改分发 · 开源共享 -->
+
+        <!-- · 自由使用 · 修改分发 · 开源共享 -->
         </p>
 
         </p>
     </footer>
 
-    <script>
-        // 合并：主题切换 + 选项卡功能 + PWA 安装逻辑 + ServiceWorker 注册（避免重复声明）
-        (function () {
-            // 主题切换
-            const themeToggleBtn = document.getElementById('theme-toggle');
-            const themeIcon = themeToggleBtn && themeToggleBtn.querySelector('i');
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                document.body.setAttribute('data-theme', savedTheme);
-                if (themeIcon) themeIcon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-            }
-
-            if (themeToggleBtn) {
-                themeToggleBtn.addEventListener('click', () => {
-                    const currentTheme = document.body.getAttribute('data-theme') || 'light';
-                    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-                    document.body.setAttribute('data-theme', newTheme);
-                    if (themeIcon) themeIcon.className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-                    localStorage.setItem('theme', newTheme);
-                });
-            }
-
-            // 选项卡功能
-            const tabs = document.querySelectorAll('.tab');
-            const tabContents = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const tabId = tab.getAttribute('data-tab');
-                    tabs.forEach(t => t.classList.remove('active'));
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    tab.classList.add('active');
-                    document.getElementById(tabId).classList.add('active');
-                });
-            });
-
-            // 实时时分秒显示（每秒更新）
-            (function () {
-                const el = document.getElementById('current-time');
-                if (!el) return;
-                const pad = n => String(n).padStart(2, '0');
-                const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-                function render() {
-                    const d = new Date();
-                    el.textContent = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${weekdays[d.getDay()]} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-                }
-                render();
-                setInterval(render, 1000);
-            })();
-
-            // 获取访客 IP 与天气（多服务回退 + 超时 + geolocation 备用）
-            (function () {
-                const ipEl = document.getElementById('visitor-ip');
-                const locEl = document.getElementById('weather-location');
-                const tempEl = document.getElementById('weather-temp');
-                const descEl = document.getElementById('weather-desc');
-                const iconEl = document.getElementById('weather-icon');
-
-                const timeout = (ms) => new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms));
-                const fetchJSON = (url, ms = 6000) => Promise.race([fetch(url).then(r => r.ok ? r.json() : Promise.reject(r)), timeout(ms)]);
-
-                function weatherCodeToText(code) {
-                    if (code === 0) return '晴朗';
-                    if (code <= 3) return '多云';
-                    if (code === 45 || code === 48) return '雾';
-                    if (code >= 51 && code <= 67) return '小雨';
-                    if (code >= 71 && code <= 77) return '小雪';
-                    if (code >= 80 && code <= 82) return '阵雨';
-                    if (code >= 95) return '雷暴';
-                    return '多变';
-                }
-                function weatherCodeToEmoji(code) {
-                    if (code === 0) return '☀️';
-                    if (code <= 3) return '⛅';
-                    if (code === 45 || code === 48) return '🌫️';
-                    if (code >= 51 && code <= 67) return '🌧️';
-                    if (code >= 71 && code <= 77) return '❄️';
-                    if (code >= 80 && code <= 82) return '🌦️';
-                    if (code >= 95) return '⚡';
-                    return '🌤️';
-                }
-
-                async function getIpData() {
-                    const services = [
-                        'https://ipapi.co/json/',
-                        'https://ipwho.is/json/'
-                    ];
-                    for (const url of services) {
-                        try {
-                            const d = await fetchJSON(url, 6000);
-                            if (d && (d.ip || d.success === true || d.ip_address)) return d;
-                        } catch (e) {
-                            // 继续下一个服务
-                        }
-                    }
-                    return null;
-                }
-
-                async function getCoordsViaGeolocation() {
-                    if (!navigator.geolocation) return null;
-                    return new Promise((resolve) => {
-                        const done = (pos) => resolve({ latitude: pos.coords.latitude, longitude: pos.coords.longitude });
-                        const fail = () => resolve(null);
-                        navigator.geolocation.getCurrentPosition(done, fail, { maximumAge: 600000, timeout: 8000 });
-                    });
-                }
-
-                (async () => {
-                    try {
-                        const data = await getIpData();
-                        let lat = null, lon = null;
-                        if (data) {
-                            const ip = data.ip || data.ip_address || '—';
-                            if (ipEl) ipEl.textContent = `IP: ${ip}`;
-                            const city = data.city || data.city || '';
-                            const region = data.region || data.region || data.regionName || '';
-                            const country = data.country_name || data.country || data.countryCode || '';
-                            if (locEl) locEl.textContent = [city, region, country].filter(Boolean).join(' · ') || '未知位置';
-                            lat = data.latitude ?? data.lat ?? data.latitude;
-                            lon = data.longitude ?? data.lon ?? data.longitude;
-                        } else {
-                            if (ipEl) ipEl.textContent = 'IP: 无法获取';
-                            if (locEl) locEl.textContent = '尝试定位中…';
-                        }
-
-                        if (lat == null || lon == null) {
-                            // 尝试浏览器定位
-                            const geo = await getCoordsViaGeolocation();
-                            if (geo) {
-                                lat = geo.latitude;
-                                lon = geo.longitude;
-                                if (locEl && (!locEl.textContent || locEl.textContent === '尝试定位中…')) locEl.textContent = '通过浏览器定位';
-                            }
-                        }
-
-                        if (lat != null && lon != null) {
-                            const url = `https://api.open-meteo.com/v1/forecast?latitude=${encodeURIComponent(lat)}&longitude=${encodeURIComponent(lon)}&current_weather=true&timezone=auto`;
-                            try {
-                                const w = await fetchJSON(url, 7000);
-                                const cw = w.current_weather || {};
-                                const temp = cw.temperature;
-                                const code = cw.weathercode;
-                                const wind = cw.windspeed;
-                                if (tempEl) tempEl.textContent = (temp != null) ? `${Number(temp).toFixed(1)}°C` : '--°C';
-                                if (descEl) descEl.textContent = `${weatherCodeToText(code)} · 风 ${wind ?? '--'} km/h`;
-                                if (iconEl) iconEl.textContent = weatherCodeToEmoji(code);
-                            } catch (e) {
-                                if (descEl) descEl.textContent = '天气服务不可用';
-                            }
-                        } else {
-                            if (descEl) descEl.textContent = '无法获取经纬度';
-                            if (tempEl) tempEl.textContent = '--°C';
-                            if (iconEl) iconEl.textContent = '—';
-                        }
-                    } catch (e) {
-                        if (ipEl) ipEl.textContent = 'IP: 无法获取';
-                        if (locEl) locEl.textContent = '未知位置';
-                        if (descEl) descEl.textContent = '天气服务不可用';
-                    }
-                })();
-            })();
-
-            // PWA 安装（beforeinstallprompt）
-            let deferredPrompt;
-            const installBtn = document.getElementById('install-btn');
-            window.addEventListener('beforeinstallprompt', (e) => {
-                e.preventDefault();
-                deferredPrompt = e;
-                if (installBtn) installBtn.style.display = 'inline-flex';
-            });
-
-            if (installBtn) {
-                installBtn.addEventListener('click', async () => {
-                    if (!deferredPrompt) return;
-                    deferredPrompt.prompt();
-                    const choiceResult = await deferredPrompt.userChoice;
-                    deferredPrompt = null;
-                    installBtn.style.display = 'none';
-                    console.log('用户选择: ', choiceResult.outcome);
-                });
-            }
-
-            // 注册 service worker
-            if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function () {
-                    navigator.serviceWorker.register('/service-worker.js').catch(err => {
-                        console.warn('SW 注册失败:', err);
-                    });
-                });
-            }
-        })();
-    </script>
+    <!-- JavaScript文件 - 按依赖顺序加载 -->
+    <!-- <script src="/js/main.js"></script> 基础功能和交互 -->
+    <script src="/js/weather.js"></script> <!-- 天气小部件功能 -->
 </body>
 
 </html>
