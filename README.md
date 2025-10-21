@@ -158,6 +158,17 @@ A: Cloudflare 会自动处理 SSL，如遇问题检查 DNS 配置
 - 📺 Bilibili: [473911887](https://space.bilibili.com/473911887)
 - 站长个人独立运营QQ群: [154318950](https://gitee.com/li-zhienxuan_study/image/raw/master/image/QQ_Group.png)
 
+
+## 十、许可证
+
+本项目采用 **GNU General Public License v3.0** 许可证。
+
+- **查看完整许可证**: [LICENSE](LICENSE) 文件
+- **商业使用**: 允许，但衍生作品必须开源
+- **修改与分发**: 允许，需保留版权声明并采用相同许可证
+
+**简单理解**: 您可以自由使用、修改和分发本软件，但基于此项目的任何衍生作品也必须以 GPL v3.0 开源。
+
 ---
 
 **星星点亮夜空，代码构建梦想** ✨
@@ -166,4 +177,4 @@ A: Cloudflare 会自动处理 SSL，如遇问题检查 DNS 配置
 
 ---
 
-*最后更新: 2025年10月21日 星期二*
+*最后更新: 2025年10月21日 14:40:35 星期二 *
