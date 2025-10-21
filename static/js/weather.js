@@ -65,7 +65,10 @@ class TimeDisplay {
     }
 
     init() {
-        if (!this.timeElement) return;
+        if (!this.timeElement) {
+            console.warn('未找到时间显示元素 #current-time');
+            return;
+        }
         this.updateTime();
         setInterval(() => this.updateTime(), 1000);
     }
@@ -82,7 +85,7 @@ class TimeDisplay {
     }
 }
 
-// 天气功能
+// 天气功能 - 修复版本
 class WeatherWidget {
     constructor() {
         this.ipElement = document.getElementById('visitor-ip');
@@ -90,6 +93,13 @@ class WeatherWidget {
         this.tempElement = document.getElementById('weather-temp');
         this.descElement = document.getElementById('weather-desc');
         this.iconElement = document.getElementById('weather-icon');
+        
+        // 检查必要元素是否存在
+        if (!this.locationElement || !this.tempElement) {
+            console.warn('天气小部件所需元素未找到');
+            return;
+        }
+        
         this.init();
     }
 
@@ -98,23 +108,30 @@ class WeatherWidget {
             const data = await this.getIpData();
             await this.processWeatherData(data);
         } catch (error) {
-            this.handleError();
+            console.warn('天气数据获取失败:', error);
+            this.setDefaultDisplay();
         }
     }
 
     async getIpData() {
+        // 使用更稳定的IP API服务
         const services = [
-            'https://ipapi.co/json/',
-            'https://ipwho.is/json/'
+            'https://api.ipify.org?format=json',
+            'https://jsonip.com/',
+            'https://api.db-ip.com/v2/free/self'
         ];
 
         for (const url of services) {
             try {
-                const data = await this.fetchWithTimeout(url, 6000);
-                if (data && (data.ip || data.success === true || data.ip_address)) {
-                    return data;
+                const data = await this.fetchWithTimeout(url, 5000);
+                if (data && (data.ip || data.ipAddress)) {
+                    // 获取位置信息的备用服务
+                    const ip = data.ip || data.ipAddress;
+                    const locationData = await this.fetchWithTimeout(`http://ip-api.com/json/${ip}`, 5000);
+                    return { ip, ...locationData };
                 }
             } catch (error) {
+                console.log(`IP服务 ${url} 失败:`, error.message);
                 continue;
             }
         }
@@ -126,17 +143,21 @@ class WeatherWidget {
 
         if (data) {
             this.updateIpDisplay(data);
-            lat = data.latitude ?? data.lat;
-            lon = data.longitude ?? data.lon;
-        }
-
-        if (lat == null || lon == null) {
-            const geoData = await this.getGeolocation();
-            if (geoData) {
-                lat = geoData.latitude;
-                lon = geoData.longitude;
-                this.updateLocationDisplay('通过浏览器定位');
+            lat = data.lat || data.latitude;
+            lon = data.lon || data.longitude;
+            
+            // 如果IP API没有返回位置，使用默认位置（上海）
+            if (!lat || !lon) {
+                lat = 31.2304;
+                lon = 121.4737;
+                this.updateLocationDisplay('上海 · 中国');
             }
+        } else {
+            // 完全失败时使用默认位置
+            lat = 31.2304;
+            lon = 121.4737;
+            this.updateLocationDisplay('默认位置');
+            if (this.ipElement) this.ipElement.textContent = 'IP: 无法获取';
         }
 
         if (lat != null && lon != null) {
@@ -147,12 +168,12 @@ class WeatherWidget {
     }
 
     updateIpDisplay(data) {
-        const ip = data.ip || data.ip_address || '—';
+        const ip = data.ip || '—';
         if (this.ipElement) this.ipElement.textContent = `IP: ${ip}`;
         
         const city = data.city || '';
-        const region = data.region || data.regionName || '';
-        const country = data.country_name || data.country || '';
+        const region = data.regionName || data.region || '';
+        const country = data.country || data.countryCode || '';
         const location = [city, region, country].filter(Boolean).join(' · ') || '未知位置';
         if (this.locationElement) this.locationElement.textContent = location;
     }
@@ -162,16 +183,27 @@ class WeatherWidget {
     }
 
     async fetchWeatherData(lat, lon) {
-        const url = `https://api.open-meteo.com/v1/forecast?latitude=${encodeURIComponent(lat)}&longitude=${encodeURIComponent(lon)}&current_weather=true&timezone=auto`;
-        
-        try {
-            const weatherData = await this.fetchWithTimeout(url, 7000);
-            const currentWeather = weatherData.current_weather || {};
-            
-            this.updateWeatherDisplay(currentWeather);
-        } catch (error) {
-            this.setWeatherError();
+        // 使用更可靠的天气API
+        const weatherUrls = [
+            `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=auto`,
+            `https://api.weather.gov/points/${lat},${lon}`
+        ];
+
+        for (const url of weatherUrls) {
+            try {
+                const weatherData = await this.fetchWithTimeout(url, 6000);
+                if (weatherData && weatherData.current_weather) {
+                    this.updateWeatherDisplay(weatherData.current_weather);
+                    return;
+                }
+            } catch (error) {
+                console.log(`天气服务 ${url} 失败:`, error.message);
+                continue;
+            }
         }
+        
+        // 所有天气服务都失败
+        this.setWeatherError();
     }
 
     updateWeatherDisplay(weather) {
@@ -191,19 +223,23 @@ class WeatherWidget {
     }
 
     setDefaultWeather() {
-        if (this.descElement) this.descElement.textContent = '无法获取经纬度';
+        if (this.descElement) this.descElement.textContent = '天气服务暂不可用';
         if (this.tempElement) this.tempElement.textContent = '--°C';
-        if (this.iconElement) this.iconElement.textContent = '—';
+        if (this.iconElement) this.iconElement.textContent = '🌤️';
     }
 
     setWeatherError() {
-        if (this.descElement) this.descElement.textContent = '天气服务不可用';
+        if (this.descElement) this.descElement.textContent = '天气数据获取失败';
+        if (this.tempElement) this.tempElement.textContent = '--°C';
+        if (this.iconElement) this.iconElement.textContent = '❓';
     }
 
-    handleError() {
-        if (this.ipElement) this.ipElement.textContent = 'IP: 无法获取';
-        if (this.locationElement) this.locationElement.textContent = '未知位置';
-        if (this.descElement) this.descElement.textContent = '天气服务不可用';
+    setDefaultDisplay() {
+        if (this.ipElement) this.ipElement.textContent = 'IP: 获取中...';
+        if (this.locationElement) this.locationElement.textContent = '位置信息加载中';
+        if (this.descElement) this.descElement.textContent = '天气信息加载中';
+        if (this.tempElement) this.tempElement.textContent = '--°C';
+        if (this.iconElement) this.iconElement.textContent = '⏳';
     }
 
     async fetchWithTimeout(url, timeout) {
@@ -211,8 +247,16 @@ class WeatherWidget {
         const timeoutId = setTimeout(() => controller.abort(), timeout);
         
         try {
-            const response = await fetch(url, { signal: controller.signal });
+            const response = await fetch(url, { 
+                signal: controller.signal,
+                mode: 'cors'
+            });
             clearTimeout(timeoutId);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            
             return await response.json();
         } catch (error) {
             clearTimeout(timeoutId);
@@ -220,85 +264,34 @@ class WeatherWidget {
         }
     }
 
-    async getGeolocation() {
-        if (!navigator.geolocation) return null;
-        
-        return new Promise((resolve) => {
-            const success = (position) => resolve({
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude
-            });
-            const error = () => resolve(null);
-            
-            navigator.geolocation.getCurrentPosition(success, error, {
-                maximumAge: 600000,
-                timeout: 8000
-            });
-        });
-    }
-
     weatherCodeToText(code) {
         const codes = {
-            0: '晴朗',
-            1: '晴朗',
-            2: '晴朗',
-            3: '多云',
-            45: '雾',
-            48: '雾',
-            51: '小雨',
-            53: '小雨',
-            55: '小雨',
-            56: '小雨',
-            57: '小雨',
-            61: '小雨',
-            63: '小雨',
-            65: '小雨',
-            66: '小雨',
-            67: '小雨',
-            71: '小雪',
-            73: '小雪',
-            75: '小雪',
-            77: '小雪',
-            80: '阵雨',
-            81: '阵雨',
-            82: '阵雨',
-            95: '雷暴'
+            0: '晴朗', 1: '晴朗', 2: '晴朗', 3: '多云',
+            45: '雾', 48: '雾',
+            51: '小雨', 53: '小雨', 55: '小雨',
+            61: '小雨', 63: '小雨', 65: '小雨',
+            71: '小雪', 73: '小雪', 75: '小雪', 77: '小雪',
+            80: '阵雨', 81: '阵雨', 82: '阵雨',
+            95: '雷暴', 96: '雷暴', 99: '雷暴'
         };
-        return codes[code] || '多变';
+        return codes[code] || '天气多变';
     }
 
     weatherCodeToEmoji(code) {
         const emojis = {
-            0: '☀️',
-            1: '☀️',
-            2: '☀️',
-            3: '⛅',
-            45: '🌫️',
-            48: '🌫️',
-            51: '🌧️',
-            53: '🌧️',
-            55: '🌧️',
-            56: '🌧️',
-            57: '🌧️',
-            61: '🌧️',
-            63: '🌧️',
-            65: '🌧️',
-            66: '🌧️',
-            67: '🌧️',
-            71: '❄️',
-            73: '❄️',
-            75: '❄️',
-            77: '❄️',
-            80: '🌦️',
-            81: '🌦️',
-            82: '🌦️',
-            95: '⚡'
+            0: '☀️', 1: '☀️', 2: '☀️', 3: '⛅',
+            45: '🌫️', 48: '🌫️',
+            51: '🌧️', 53: '🌧️', 55: '🌧️',
+            61: '🌧️', 63: '🌧️', 65: '🌧️',
+            71: '❄️', 73: '❄️', 75: '❄️', 77: '❄️',
+            80: '🌦️', 81: '🌦️', 82: '🌦️',
+            95: '⛈️', 96: '⛈️', 99: '⛈️'
         };
         return emojis[code] || '🌤️';
     }
 }
 
-// PWA功能
+// PWA功能 - 移除Service Worker注册
 class PWAHandler {
     constructor() {
         this.installBtn = document.getElementById('install-btn');
@@ -319,7 +312,8 @@ class PWAHandler {
             this.installBtn.addEventListener('click', () => this.installApp());
         }
 
-        this.registerServiceWorker();
+        // 注释掉Service Worker注册，避免404错误
+        // this.registerServiceWorker();
     }
 
     async installApp() {
@@ -334,22 +328,30 @@ class PWAHandler {
         }
     }
 
-    registerServiceWorker() {
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js').catch(err => {
-                    console.warn('SW 注册失败:', err);
-                });
-            });
-        }
-    }
+    // registerServiceWorker() {
+    //     if ('serviceWorker' in navigator) {
+    //         window.addEventListener('load', () => {
+    //             navigator.serviceWorker.register('/service-worker.js').catch(err => {
+    //                 console.warn('SW 注册失败:', err);
+    //             });
+    //         });
+    //     }
+    // }
 }
 
 // 初始化所有功能
 document.addEventListener('DOMContentLoaded', () => {
-    new ThemeManager();
-    new TabManager();
-    new TimeDisplay();
-    new WeatherWidget();
-    new PWAHandler();
+    console.log('初始化网站功能...');
+    
+    try {
+        new ThemeManager();
+        new TabManager();
+        new TimeDisplay();
+        new WeatherWidget();
+        new PWAHandler();
+        
+        console.log('所有功能初始化完成');
+    } catch (error) {
+        console.error('功能初始化失败:', error);
+    }
 });
