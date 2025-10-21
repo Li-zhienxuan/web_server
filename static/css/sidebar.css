@@ -1,0 +1,115 @@
+        /* 侧边栏 */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .sidebar-widget {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .widget-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--themecolor);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .category-list,
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .category-list,
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .category-item,
+        .tag-item {
+            background-color: var(--bg-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .category-item:hover,
+        .tag-item:hover {
+            background-color: var(--themecolor);
+            color: white;
+        }
+
+        .search-form {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px 0 0 6px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .search-button {
+            background-color: var(--themecolor);
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 0 6px 6px 0;
+            cursor: pointer;
+        }
+
+
+
+        /* 天气 / 访客 IP 小部件 */
+        .weather-widget {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 16px;
+            border-radius: 10px;
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            font-size: 0.95rem;
+        }
+
+        .weather-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .weather-icon {
+            font-size: 1.6rem;
+        }
+
+        .weather-location {
+            font-weight: 600;
+        }
+
+        .weather-temp {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--themecolor);
+        }
+
+        .weather-note {
+            color: #7f8c8d;
+            font-size: 0.85rem;
+        }

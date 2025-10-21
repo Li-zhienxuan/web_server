@@ -1,0 +1,9 @@
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 50px;
+        }
