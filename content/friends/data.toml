@@ -1,0 +1,26 @@
+[[groups]]
+name = "推荐友链"
+order = 1
+friends = [
+  { avatar = "https://q2.qlogo.cn/headimg_dl?dst_uin=2739043475&spec=5", desc = "夭夭随笔，选择性失忆综合症", link = "https://blog.811311.xyz/", name = "白夭夭", sublink = "夭夭的博客", tags = ["水文随笔", "美食", "夭夭回忆录"] },
+  { avatar = "https://hslzz.cn/assets/img/favicon.png", desc = "与世无争，不染于泥", link = "https://blog.hslzz.cn/", name = "花生莲子粥", sublink = "花生莲子粥の小窝", tags = ["技术分享", "服务器运维", "Ubuntu"] },
+
+]
+
+[[groups]]
+name = "UP主友友们"
+order = 2
+friends = [
+  { avatar = "/images/taomuyu.jpg", desc = "我的被子生病了，我要在床上照顾它", link = "https://space.bilibili.com/3546554881280375", name = "桃木雨", sublink = "好巧，你也喜欢我呀，那我们真是太有眼光了", tags = ["吉他", "尤克里里", "弹唱", "Bilibili UP"] },
+  { avatar = "/images/xiaomei.jpg", desc = "日常乱唱", link = "https://space.bilibili.com/1164913332", name = "梨子Light", sublink = "至少还有你，值得我去珍惜", tags = ["吉他", "粤语", "弹唱", "Bilibili UP"] },
+  { avatar = "/images/wanwan.jpg", desc = "执笔写诗，落墨成画，在字里行间寻找生活的诗意", link = "https://mp.weixin.qq.com/s?__biz=MzI3Nzk3Njg1MA==&mid=2247488092&idx=1&sn=df56c17d73d49da5dc09f6ac90c06454", name = "江浙沪第一甜妹", sublink = "以墨传情，以文会友 · 甜妹的外表下藏着文艺的灵魂", tags = ["才女", "诗歌", "文学创作", "散文随笔"] }
+]
+
+
+[[groups]]
+name = "开发者们"
+order = 3
+friends = [
+  { avatar = "https://webui.nbgui.top/logo.png", desc = "新一代 NoneBot Web 管理界面", link = "https://webui.nbgui.top/", name = "NoneBot WebUI", sublink = "", tags = ["NoneBot", "WebUI", "[夜风] NightWind"] },
+  { avatar = "/images/zhazhahui.jpg", desc = "小时有一个梦想，成为一个公益的人", link = "https://www.495000.xyz", name = "Jack", sublink = "好巧，你如果你需要公益服玩游戏，如果你需要学技术，那你真是太有眼光了 谁想我加入我们", tags = ["公益服主", "技术型选手", "各类公益服", "大厂IT攻防选手", "各类技术解答师", "刑法民法双科满分顶级法学生"] }
+]
