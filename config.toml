@@ -1,11 +1,12 @@
 base_url = "https://lilyxuan.online"
-title = "lilyXUAN"
-description = "lily & 哈基轩的空间"
+title = "哈基米"
+description = "哈基米的个人站"
 
 # theme = "hermit"
 
 build_search_index = true
 compile_sass = true
+
 
 
 # 分类系统定义
@@ -16,10 +17,12 @@ taxonomies = [
 
 [extra]
 # 作者信息
-author = "lilyXUAN"
+author = "哈基米"
 email = "li.zhienxuan0516@gmail.com"  # 替换为你的邮箱
 custom_css = ["css/global.css"]
-since = 2024
+since = 2025
+
+
 
 # 强制 HTTPS 相关设置
 # force_https = true
