@@ -168,7 +168,7 @@ A: Cloudflare 会自动处理 SSL，如遇问题检查 DNS 配置
 
 本项目采用 **GNU General Public License v3.0** 许可证。
 
-- **查看完整许可证**: [LICENSE](LICENSE) 文件
+- **查看完整许可证**: [LICENSE](https://github.com/Li-zhienxuan/web_server/blob/main/LICENSE) 文件
 - **商业使用**: 允许，但衍生作品必须开源
 - **修改与分发**: 允许，需保留版权声明并采用相同许可证
 
