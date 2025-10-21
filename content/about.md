@@ -3,7 +3,7 @@ title = "关于"
 date = 2025-10-13
 +++
 
-# 哈基米的个人站
+# 你好呀，这里是哈基米的个人站
 
 ![Zola](https://img.shields.io/badge/Zola-静态网站生成器-FF7E0D)
 ![Cloudflare Pages](https://img.shields.io/badge/Cloudflare-Pages部署-F6820F)
