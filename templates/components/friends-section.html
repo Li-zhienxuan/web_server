@@ -1,0 +1,100 @@
+<!-- 从数据文件加载友链 -->
+{% set friends_data = load_data(path="content/friends/data.toml") %}
+
+<!-- 按order字段排序分组 -->
+{% set sorted_groups = friends_data.groups | sort(attribute="order") %}
+
+<!-- 循环渲染排序后的友链分组 -->
+{% for group in sorted_groups %}
+<div class="friend-section">
+    <h2 class="section-title">{{ group.name }}</h2>
+    
+    <!-- 每个分组内的友链卡片 -->
+    <div class="friend-cards">
+        {% for friend in group.friends %}
+        <a class="friend-card" href="{{ friend.link }}" target="_blank" rel="noopener noreferrer">
+            <div class="friend-header">
+                <img src="{{ friend.avatar }}" alt="{{ friend.name }}" class="friend-avatar">
+                <div class="friend-info">
+                    <h3 class="friend-name">{{ friend.name }}</h3>
+                    {% if friend.sublink %}
+                    <span class="friend-link">{{ friend.sublink }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            {% if friend.desc %}
+            <p class="friend-desc">{{ friend.desc }}</p>
+            {% endif %}
+            {% if friend.tags %}
+            <div class="friend-tags">
+                {% for tag in friend.tags %}
+                <span class="friend-tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endfor %}
+
+<!-- 申请友链部分保持不变 -->
+<div class="apply-section">
+    <h2 class="section-title">结友</h2>
+
+    <div class="tabs">
+        <div class="tab active" data-tab="blog-info">博客信息</div>
+        <div class="tab" data-tab="requirements">友链要求</div>
+        <div class="tab" data-tab="apply">申请友链</div>
+    </div>
+
+    <div class="tab-content active" id="blog-info">
+        <div class="blog-info">
+            <div class="info-title">哈基米</div>
+            <div class="info-item">
+                <span class="info-label">名称：</span>
+                <span>哈基米的个人站</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">地址：</span>
+                <span><a href="https://lilyxuan.online" target="_blank">https://lilyxuan.online</a></span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">描述：</span>
+                <span>这里是哈基米个人站，分享技术，热爱生活</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">头像：</span>
+                <span><a href="/images/main_icon.png" target="_blank">点击查看</a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="requirements">
+        <div class="requirements">
+            <p>友链有以下要求：</p>
+            <ul class="requirement-list">
+                <li>站内不得是大量AI生成的（无意义的）文章</li>
+                <li>接受个人博客/导航页</li>
+                <li>交友结识为主</li>
+                <li>申请友链前请先添加本站友链</li>
+            </ul>
+            <p>如果没有留下友链或是长期无法访问的网站，本站会删除友链，请你理解</p>
+            <p>留好友链后可以留言，如果合适会为您添加友链，谢谢！</p>
+        </div>
+    </div>
+
+    <div class="tab-content" id="apply">
+        <p>如果你想申请友链，留下你的信息</p>
+        <p>友链申请部分站长正在开发中，有需要请直接主页邮箱联系，喵喵喵~</p>
+        <p>参考内容如下：</p>
+        <div class="code-block">
+            name: 昵称<br>
+            desc: 个人描述<br>
+            link: 博客链接<br>
+            icon: 头像链接<br>    
+            tags: 标签1, 标签2, ...<br>
+            sublink: 副标题文本
+        </div>
+    </div>
+</div>
