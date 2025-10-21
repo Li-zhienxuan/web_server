@@ -1,4 +1,4 @@
-# 哈基米的个人站
+# 你好呀，这里是哈基米的个人站
 
 ![Zola](https://img.shields.io/badge/Zola-静态网站生成器-FF7E0D)
 ![Cloudflare Pages](https://img.shields.io/badge/Cloudflare-Pages部署-F6820F)
@@ -6,24 +6,32 @@
 
 一个基于 Zola 静态网站生成器构建的个人博客与作品集网站，专注于技术分享、生活感悟和创意表达。
 
-## ✨ 特性
 
-- 🚀 **极速加载** - 基于 Zola 静态生成，页面加载速度快
-- 📱 **响应式设计** - 完美适配桌面端和移动端
-- 🎨 **优雅界面** - 简洁美观的设计风格
-- 🔧 **技术栈**：
-  - **框架**: Zola 静态网站生成器
-  - **部署**: Cloudflare Pages + GitHub Actions
-  - **域名**: lilyxuan.online
-  - **主题**: 自定义主题，参考 Butterfly 设计理念
+## 访问地址
+- **主站**: https://lilyxuan.online
+- **备站**: https://web-server-3yx.pages.dev （需要魔法哦）
+- **本站**: https://github.com/Li-zhienxuan
 
-## 🛠️ 本地开发
 
-### 开发环境要求
+
+## 一、特性
+
+-  **极速加载** - 基于 Zola 静态生成，页面加载速度快
+-  **响应式设计** - 完美适配桌面端和移动端
+-  **优雅界面** - 简洁美观的设计风格
+-  **技术栈**
+    - **框架**: Zola 静态网站生成器
+    - **部署**: Cloudflare Pages + GitHub Actions
+    - **域名**: lilyxuan.online
+    - **主题**: 目前是自定义主题，参考 Butterfly 设计理念
+
+## 二、本地开发环境搭建
+
+### 1. 开发环境要求
 - Zola v0.21.0 或更高版本
 - Git
 
-### 安装与运行
+### 2. 安装与运行
 
 1. **克隆项目**
 ```bash
@@ -42,9 +50,9 @@ zola serve
 zola build
 ```
 
-## 📁 项目结构
+## 三、项目结构
 
-```
+```md
 web_server/
 ├── config.toml          # 网站配置文件
 ├── content/             # 内容目录
@@ -57,7 +65,7 @@ web_server/
 └── themes/             # 主题目录
 ```
 
-## 🚀 部署流程
+## 四、部署流程
 
 本网站使用自动化部署流程：
 
@@ -86,30 +94,26 @@ git commit -m "更新描述"
 git push origin main
 ```
 
-## 🎯 功能模块
+## 五、功能模块
 
 ### 已完成功能
 - ✅ 首页设计与布局
-- ✅ 友链页面（支持分类、标签、卡片式展示）
+- ✅ 友链页面（支持添加、友链展示）
 - ✅ 响应式设计适配
 - ✅ 深色/浅色主题切换
 - ✅ 社交图标集成
 - ✅ 自动化部署流程
 
 ### 规划功能
+- 🔄  友链页面（支持分类、卡片式展示）
 - 🔄 博客文章系统
 - 🔄 项目作品展示
-// - 🔄 评论系统集成
-// - 🔄 搜索功能
-// - 🔄 多语言支持
+- 🔄 评论系统集成
+- 🔄 搜索功能
+- 🔄 多语言支持
 
-## 🌐 访问地址
 
-- **主站**: https://lilyxuan.online
-- **备用地址**: https://web-server-3yx.pages.dev （需要魔法哦）
-- **GitHub**: https://github.com/Li-zhienxuan
-
-## 🤝 友链申请
+## 六、友链申请
 
 欢迎交换友链！请确保您的网站：
 - 内容健康积极
@@ -125,7 +129,7 @@ icon: "头像链接"
 tags: ["标签1", "标签2"]
 ```
 
-## ❓ 常见问题
+## 七、常见问题
 
 ### Q: 图片无法显示？
 A: 确保图片放在 `static/images/` 目录，HTML中使用 `/images/文件名` 路径
@@ -142,16 +146,17 @@ A: 检查构建命令是否正确，确保 Zola 版本与构建命令中的版�
 ### Q: SSL证书问题？
 A: Cloudflare 会自动处理 SSL，如遇问题检查 DNS 配置
 
-## 📄 许可证
+## 八、许可证
 
 本项目采用 GPL-3.0 许可证 - 详见 [LICENSE](LICENSE) 文件
 
-## 📞 联系我
+## 九、联系我
 
 - 📧 邮箱: Li.zhienxuan0516@gmail.com
 - 🐱 GitHub: [Li-zhienxuan](https://github.com/Li-zhienxuan)
+- 🌐 Gitee: [li-zhienxuan_study](https://gitee.com/li-zhienxuan_study)
 - 📺 Bilibili: [473911887](https://space.bilibili.com/473911887)
-- 🐦 站长个人独立运营QQ群: [154318950] (https://gitee.com/li-zhienxuan_study/image/raw/master/image/QQ_Group.png)
+- 站长个人独立运营QQ群: [154318950](https://gitee.com/li-zhienxuan_study/image/raw/master/image/QQ_Group.png)
 
 ---
 
