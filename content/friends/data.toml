@@ -4,7 +4,7 @@ order = 1
 friends = [
   { avatar = "https://q2.qlogo.cn/headimg_dl?dst_uin=2739043475&spec=5", desc = "夭夭随笔，选择性失忆综合症", link = "https://blog.811311.xyz/", name = "白夭夭", sublink = "夭夭的博客", tags = ["水文随笔", "美食", "夭夭回忆录"] },
   { avatar = "https://hslzz.cn/assets/img/favicon.png", desc = "与世无争，不染于泥", link = "https://blog.hslzz.cn/", name = "花生莲子粥", sublink = "花生莲子粥の小窝", tags = ["技术分享", "服务器运维", "Ubuntu"] },
-
+  { avatar = "/images/EVE_NG.png", desc = "EVE-NG中文区独家官方合作伙伴", link = "https://www.emulatedlab.com/", name = "EmulatedLab 论坛", sublink = "EmulatedLab官网", tags = ["网络仿真", "EVE-NG", "Hi168云平台"] },
 ]
 
 [[groups]]
