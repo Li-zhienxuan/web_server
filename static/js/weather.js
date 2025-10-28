@@ -85,7 +85,7 @@ class TimeDisplay {
     }
 }
 
-// 天气功能 - 修复版本
+// 天气功能 - 带隐藏IP功能
 class WeatherWidget {
     constructor() {
         this.ipElement = document.getElementById('visitor-ip');
@@ -93,6 +93,7 @@ class WeatherWidget {
         this.tempElement = document.getElementById('weather-temp');
         this.descElement = document.getElementById('weather-desc');
         this.iconElement = document.getElementById('weather-icon');
+        this.realIp = null; // 存储真实IP
         
         // 检查必要元素是否存在
         if (!this.locationElement || !this.tempElement) {
@@ -113,48 +114,45 @@ class WeatherWidget {
         }
     }
 
-// 替换 getIpData 方法为这个更稳定的版本
-async getIpData() {
-    // 使用更稳定的IP和位置API，避免CORS问题
-    const services = [
-        'https://api.ip.sb/geoip',  // 稳定且支持CORS
-        'https://ipapi.co/json/',   // 主要备用
-        'http://ip-api.com/json/'   // HTTP备用（某些环境可用）
-    ];
+    // 获取IP数据
+    async getIpData() {
+        const services = [
+            'https://api.ip.sb/geoip',
+            'https://ipapi.co/json/',
+            'http://ip-api.com/json/'
+        ];
 
-    for (const url of services) {
-        try {
-            // 对于HTTP服务，捕获可能的CORS错误
-            const data = await this.fetchWithTimeout(url, 5000);
-            
-            if (data && (data.ip || data.ip_address || data.query)) {
-                console.log(`成功从 ${url} 获取IP数据`);
-                return {
-                    ip: data.ip || data.ip_address || data.query,
-                    city: data.city || '',
-                    region: data.region || data.regionName || data.region_code || '',
-                    country: data.country || data.country_name || data.country_code || '',
-                    lat: data.latitude || data.lat,
-                    lon: data.longitude || data.lon
-                };
+        for (const url of services) {
+            try {
+                const data = await this.fetchWithTimeout(url, 5000);
+                
+                if (data && (data.ip || data.ip_address || data.query)) {
+                    console.log(`成功从 ${url} 获取IP数据`);
+                    return {
+                        ip: data.ip || data.ip_address || data.query,
+                        city: data.city || '',
+                        region: data.region || data.regionName || data.region_code || '',
+                        country: data.country || data.country_name || data.country_code || '',
+                        lat: data.latitude || data.lat,
+                        lon: data.longitude || data.lon
+                    };
+                }
+            } catch (error) {
+                console.log(`IP服务 ${url} 失败:`, error.message);
+                continue;
             }
-        } catch (error) {
-            console.log(`IP服务 ${url} 失败:`, error.message);
-            continue;
         }
+        
+        console.log('所有IP服务都失败，使用默认位置');
+        return {
+            ip: '无法获取',
+            city: '上海',
+            region: '上海',
+            country: '中国',
+            lat: 31.2304,
+            lon: 121.4737
+        };
     }
-    
-    // 所有服务都失败时返回默认数据
-    console.log('所有IP服务都失败，使用默认位置');
-    return {
-        ip: '无法获取',
-        city: '上海',
-        region: '上海',
-        country: '中国',
-        lat: 31.2304,
-        lon: 121.4737
-    };
-}
 
     async processWeatherData(data) {
         let lat = null, lon = null;
@@ -164,14 +162,12 @@ async getIpData() {
             lat = data.lat || data.latitude;
             lon = data.lon || data.longitude;
             
-            // 如果IP API没有返回位置，使用默认位置（上海）
             if (!lat || !lon) {
                 lat = 31.2304;
                 lon = 121.4737;
                 this.updateLocationDisplay('上海 · 中国');
             }
         } else {
-            // 完全失败时使用默认位置
             lat = 31.2304;
             lon = 121.4737;
             this.updateLocationDisplay('默认位置');
@@ -187,7 +183,33 @@ async getIpData() {
 
     updateIpDisplay(data) {
         const ip = data.ip || '—';
-        if (this.ipElement) this.ipElement.textContent = `IP: ${ip}`;
+        this.realIp = ip; // 存储真实IP
+        
+        if (this.ipElement) {
+            // 设置默认显示为隐藏状态
+            this.ipElement.textContent = 'IP: [鼠标悬停显示]';
+            this.ipElement.style.cursor = 'pointer';
+            this.ipElement.title = '点击或悬停查看IP';
+            
+            // 添加鼠标事件
+            this.ipElement.addEventListener('mouseenter', () => {
+                this.ipElement.textContent = `IP: ${ip}`;
+            });
+            
+            this.ipElement.addEventListener('mouseleave', () => {
+                this.ipElement.textContent = 'IP: [鼠标悬停显示]';
+            });
+            
+            // 添加点击事件（可选，点击后保持显示）
+            this.ipElement.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (this.ipElement.textContent.includes('悬停显示')) {
+                    this.ipElement.textContent = `IP: ${ip}`;
+                } else {
+                    this.ipElement.textContent = 'IP: [鼠标悬停显示]';
+                }
+            });
+        }
         
         const city = data.city || '';
         const region = data.regionName || data.region || '';
@@ -201,7 +223,6 @@ async getIpData() {
     }
 
     async fetchWeatherData(lat, lon) {
-        // 使用更可靠的天气API
         const weatherUrls = [
             `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=auto`,
             `https://api.weather.gov/points/${lat},${lon}`
@@ -220,7 +241,6 @@ async getIpData() {
             }
         }
         
-        // 所有天气服务都失败
         this.setWeatherError();
     }
 
@@ -253,7 +273,10 @@ async getIpData() {
     }
 
     setDefaultDisplay() {
-        if (this.ipElement) this.ipElement.textContent = 'IP: 获取中...';
+        if (this.ipElement) {
+            this.ipElement.textContent = 'IP: 获取中...';
+            this.ipElement.style.cursor = 'default';
+        }
         if (this.locationElement) this.locationElement.textContent = '位置信息加载中';
         if (this.descElement) this.descElement.textContent = '天气信息加载中';
         if (this.tempElement) this.tempElement.textContent = '--°C';
@@ -329,9 +352,6 @@ class PWAHandler {
         if (this.installBtn) {
             this.installBtn.addEventListener('click', () => this.installApp());
         }
-
-        // 注释掉Service Worker注册，避免404错误
-        // this.registerServiceWorker();
     }
 
     async installApp() {
@@ -345,16 +365,6 @@ class PWAHandler {
             this.installBtn.style.display = 'none';
         }
     }
-
-    // registerServiceWorker() {
-    //     if ('serviceWorker' in navigator) {
-    //         window.addEventListener('load', () => {
-    //             navigator.serviceWorker.register('/service-worker.js').catch(err => {
-    //                 console.warn('SW 注册失败:', err);
-    //             });
-    //         });
-    //     }
-    // }
 }
 
 // 初始化所有功能
